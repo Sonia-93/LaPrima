@@ -16,6 +16,9 @@ import searchIcon from "../heroicons-outline_search.svg";
 import starIcon from "../heroicons-outline_star.svg";
 import mailIcon from "../mail.svg";
 import mail from "../mail.svg";
+import landing1 from '../landing1.jpeg';
+import landing2 from '../landing2.jpeg';
+import landing3 from '../landing3.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
@@ -61,7 +64,11 @@ function LandingPage() {
                         </div>
                     </div>
                     <div className="right">
-                        <img src={frameImg2} alt="coffee" className='frame-image2' />
+                        <div className="hero-stacked-cards">
+                            <img src={landing3} alt="Landing 3" className="stacked-card card-back" />
+                            <img src={landing2} alt="Landing 2" className="stacked-card card-middle" />
+                            <img src={landing1} alt="Landing 1" className="stacked-card card-front" />
+                        </div>
                     </div>
                 </div>
 

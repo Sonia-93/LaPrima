@@ -1,17 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AuthLayout.css';
-import logo from '../logo.svg';
-import loginImage from '../login_image.jpeg';
+import AuthCarousel from './AuthCarousel';
 
 function LoginPage() {
     const navigate = useNavigate();
 
     return (
         <div className="auth-container">
-            <div className="auth-left" style={{ backgroundImage: `url(${loginImage})` }}>
-                <img src={logo} alt="La Prima Logo" className="auth-logo" />
-            </div>
+            <AuthCarousel />
             
             <div className="auth-right">
                 <div className="auth-form-container">

@@ -31,6 +31,153 @@
     z-index: 10;
 }
 
+/* ══════════════════════════════
+   CAROUSEL OVERLAYS
+══════════════════════════════ */
+.carousel-background {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.8s ease-in-out;
+    z-index: 0;
+}
+
+/* Darkening overlay so white text shines */
+.carousel-background::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.carousel-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 80px;
+}
+
+.carousel-top-text {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.carousel-line {
+    width: 40px;
+    height: 1px;
+    background-color: #DDA15E;
+}
+
+.carousel-top-title {
+    font-family: "Inria Sans", sans-serif;
+    color: #DDA15E;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.carousel-title {
+    font-family: "Hedvig Letters Serif", serif;
+    font-size: 48px;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.carousel-title-gold {
+    color: #DDA15E;
+    font-weight: normal;
+}
+
+.carousel-subtitle {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    max-width: 400px;
+    margin-bottom: 40px;
+    font-style: italic;
+}
+
+.carousel-testimonial {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(221, 161, 94, 0.3);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    backdrop-filter: blur(4px);
+}
+
+.testimonial-stars {
+    color: #333; /* Mockup stars look very dark/transparent */
+    letter-spacing: 4px;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.testimonial-text {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.testimonial-author-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #DDA15E;
+    padding: 6px;
+}
+
+.testimonial-name {
+    font-family: "Inria Sans", sans-serif;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.testimonial-role {
+    font-family: "Inria Sans", sans-serif;
+    color: #cccccc;
+    font-size: 12px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+    display: flex;
+    gap: 12px;
+}
+
+.carousel-dot {
+    width: 30px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-dot.active {
+    background-color: #ffffff;
+}
+
 .auth-right {
     flex: 1;
     background-color: #ffffff;
