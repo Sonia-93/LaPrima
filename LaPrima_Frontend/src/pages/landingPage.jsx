@@ -8,10 +8,13 @@ import menu from "../menu.svg";
 import rocket from "../rocket.svg";
 import register from "../register.svg";
 import dashboardIcon from "../lucide_layout-dashboard.svg";
+import callingIcon from "../calling.svg";
+import locationIconAsset from "../location.svg";
 import mobileIcon from "../heroicons-outline_device-phone-mobile.svg";
 import locationIcon from "../heroicons-outline_location-marker.svg";
 import searchIcon from "../heroicons-outline_search.svg";
 import starIcon from "../heroicons-outline_star.svg";
+import mailIcon from "../mail.svg";
 import mail from "../mail.svg";
 import { useNavigate } from 'react-router-dom';
 
@@ -475,9 +478,9 @@ function LandingPage() {
 
                         <div className="footer-column contacts-col">
                             <h4 className="footer-column-title">CONTACTS</h4>
-                            <p className="footer-contact-item"><img src={locationIcon} className="footer-contact-icon gold-icon" alt="" /> Muhanga, Rwanda</p>
-                            <p className="footer-contact-item"><img src={mobileIcon} className="footer-contact-icon gold-icon" alt="" /> 07832862521</p>
-                            <p className="footer-contact-item"><img src={mail} className="footer-contact-icon gold-icon" alt="" /> prisma@ac.rw</p>
+                            <p className="footer-contact-item"><img src={locationIconAsset} className="footer-contact-icon" alt="" /> Muhanga, Rwanda</p>
+                            <p className="footer-contact-item"><img src={callingIcon} className="footer-contact-icon" alt="" /> 07832862521</p>
+                            <p className="footer-contact-item"><img src={mailIcon} className="footer-contact-icon" alt="" /> prisma@ac.rw</p>
                             <div className="footer-social">
                                 <a href="#/" className="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
                                 <a href="#/" className="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
