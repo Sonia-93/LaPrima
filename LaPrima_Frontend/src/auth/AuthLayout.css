@@ -1,0 +1,342 @@
+/* ══════════════════════════════
+   AUTH LAYOUT (Split Screen)
+══════════════════════════════ */
+.auth-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.auth-left {
+    flex: 1;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: none; /* hidden on small screens */
+}
+
+@media (min-width: 900px) {
+    .auth-left {
+        display: block;
+    }
+}
+
+.auth-logo {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 120px;
+    filter: brightness(0) invert(1);
+    z-index: 10;
+}
+
+.auth-right {
+    flex: 1;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ══════════════════════════════
+   TABS (Create Account | Sign In)
+══════════════════════════════ */
+.auth-tabs {
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #E8D5BC;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #1C1208;
+    transition: background-color 0.3s;
+}
+
+.auth-tab.active {
+    background-color: #DDA15E;
+    border-radius: 30px;
+}
+
+/* ══════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════ */
+.auth-title {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1C1208;
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 32px;
+}
+
+/* ══════════════════════════════
+   FORMS & INPUTS
+══════════════════════════════ */
+.auth-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-form-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.auth-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.auth-label {
+    font-family: "Hedvig Letters Serif", serif;
+    font-size: 14px;
+    color: #1C1208;
+}
+
+.auth-input {
+    width: 100%;
+    background-color: #F8F8F8;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    outline: none;
+    color: #333;
+}
+.auth-input::placeholder {
+    color: #b3b3b3;
+}
+
+.auth-checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.auth-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    background-color: #F8F8F8;
+    border: none;
+    border-radius: 4px;
+}
+
+.auth-checkbox-label {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    color: #1C1208;
+    line-height: 1.5;
+}
+
+.auth-checkbox-label a {
+    color: #DDA15E;
+    text-decoration: none;
+}
+
+/* ══════════════════════════════
+   BUTTONS
+══════════════════════════════ */
+.auth-submit-btn {
+    width: 80%;
+    align-self: center;
+    background-color: #DDA15E;
+    color: #1C1208;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 0;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(221, 161, 94, 0.2);
+    transition: box-shadow 0.3s;
+}
+
+.auth-submit-btn:hover {
+    box-shadow: 0 6px 12px rgba(221, 161, 94, 0.3);
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0;
+    color: #1C1208;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+}
+.auth-divider::before, .auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #E8D5BC;
+}
+.auth-divider:not(:empty)::before {
+    margin-right: .5em;
+}
+.auth-divider:not(:empty)::after {
+    margin-left: .5em;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 0;
+    background-color: #ffffff;
+    border: 1px solid #E8D5BC;
+    border-radius: 8px;
+    font-family: "Hedvig Letters Serif", serif;
+    font-size: 16px;
+    color: #1C1208;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.social-btn:hover {
+    background-color: #FDF9F3;
+}
+
+/* ══════════════════════════════
+   VERIFY EMAIL SPECIFIC
+══════════════════════════════ */
+.verify-icon-container {
+    margin-bottom: 20px;
+}
+
+.verify-icon-container svg {
+    width: 60px;
+    height: 60px;
+    color: #DDA15E;
+}
+
+.verify-email-display {
+    width: 100%;
+    background-color: #FDF9F3;
+    border: 1px solid #E8D5BC;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    font-family: "Inria Sans", sans-serif;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.verify-subtitle {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #1C1208;
+    margin-bottom: 16px;
+}
+
+.otp-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.otp-input {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #E8D5BC;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 20px;
+    font-family: "Inria Sans", sans-serif;
+    color: #1C1208;
+    outline: none;
+}
+.otp-input:focus {
+    border-color: #DDA15E;
+}
+
+.expires-text {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+}
+.expires-text span {
+    color: #DDA15E;
+}
+
+.resend-text {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 15px;
+    color: #666;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.resend-text span {
+    color: #DDA15E;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.back-to-signup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.back-to-signup:hover {
+    color: #DDA15E;
+}
