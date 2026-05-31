@@ -915,7 +915,6 @@ html, body, #root, .App {
     background-color: #ffffff;
     padding: 60px 100px;
     border-top: 1px solid #E8D5BC;
-    border-bottom: 1px solid #E8D5BC;
     margin-top: 40px;
 }
 
@@ -925,6 +924,9 @@ html, body, #root, .App {
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
+    border: 1px solid #E8D5BC;
+    padding: 20px 40px;
+    border-radius: 2px;
 }
 
 .subscribe-logo {
@@ -947,7 +949,7 @@ html, body, #root, .App {
 .subscribe-input {
     padding: 12px 20px;
     border: 1px solid #E8D5BC;
-    border-radius: 4px;
+    border-radius: 0px;
     font-family: "Inria Sans", sans-serif;
     width: 250px;
     background: #FDF9F3;
@@ -963,6 +965,7 @@ html, body, #root, .App {
     font-family: "Inria Sans", sans-serif;
     cursor: pointer;
     font-size: 16px;
+    border-radius: 0px;
 }
 
 /* ══════════════════════════════
@@ -1084,9 +1087,13 @@ html, body, #root, .App {
     opacity: 0.7;
 }
 
-.footer-bottom {
-    padding-top: 32px;
+.footer-bottom-wrapper {
+    margin: 0 -100px; /* Pull it out of the 100px padding of footer-section */
+    padding: 32px 100px;
     border-top: 1px solid #E8D5BC;
+}
+
+.footer-bottom {
     display: flex;
     justify-content: space-between;
     max-width: 1200px;
