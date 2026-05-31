@@ -7,8 +7,16 @@ import handshake from "../handshake.svg"
 import menu from "../menu.svg";
 import rocket from "../rocket.svg";
 import register from "../register.svg";
+import dashboardIcon from "../lucide_layout-dashboard.svg";
+import mobileIcon from "../heroicons-outline_device-phone-mobile.svg";
+import locationIcon from "../heroicons-outline_location-marker.svg";
+import searchIcon from "../heroicons-outline_search.svg";
+import starIcon from "../heroicons-outline_star.svg";
+import mail from "../mail.svg";
+import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
+    const navigate = useNavigate();
     return (
         <div className="landing-page">
 
@@ -26,7 +34,7 @@ function LandingPage() {
                         <a href="#features">Features</a>
                         <a href="#testimonials">Testimonials</a>
                     </div>
-                    <button className="navbar-join-btn">Join Us</button>
+                    <button className="navbar-join-btn" onClick={() => navigate('/signup')}>Join Us</button>
                 </div>
 
                 {/* Hero Content */}
@@ -45,8 +53,8 @@ function LandingPage() {
                             grow your community — all in one elegant platform.
                         </p>
                         <div className="landing-buttons">
-                            <button className="landing-register">Register your shop</button>
-                            <button className="landing-register-btn2">See how it works</button>
+                            <button className="landing-register" onClick={() => navigate('/signup')}>Register your shop</button>
+                            <button className="landing-register-btn2" onClick={() => navigate('/#how-it-works')}>See how it works</button>
                         </div>
                     </div>
                     <div className="right">
@@ -224,8 +232,268 @@ function LandingPage() {
                 {/* END Process Section */}
 
 
+                {/* ── Everything You Need Section ── */}
+                <div className="everything-section" id="features">
+                    <div className="everything-eyebrow">
+                        <div className="line-decoration-dark"></div>
+                        <p className="everything-tag">FEATURES</p>
+                    </div>
+                    <h2 className="everything-title">Everything you need to run</h2>
+                    <h2 className="everything-title-gold">your Shop</h2>
+
+                    <div className="everything-cards">
+                        <div className="everything-card card-real-time">
+                            <div className="real-time-content">
+                                <div className="card-header-horizontal">
+                                    <img src={dashboardIcon} alt="dashboard" className='feature-icon-small' />
+                                    <h3 className="everything-card-title-horizontal">Real-Time dashboard</h3>
+                                </div>
+                                <p className="everything-card-desc">
+                                    Track your daily sales, popular items, peak hours, and customer trends from a single beautiful dashboard. Know your business inside out.
+                                </p>
+                                <button className="view-dashboard-btn">View dashboard &rarr;</button>
+                            </div>
+                            <div className="today-overview-box">
+                                <h4 className="today-overview-title">TODAY'S OVERVIEW</h4>
+                                <div className="overview-item">
+                                    <div className="overview-text">
+                                        <span className="overview-name">Expresso</span>
+                                        <span className="overview-value">148 orders</span>
+                                    </div>
+                                    <div className="overview-line stroke-100"></div>
+                                </div>
+                                <div className="overview-item">
+                                    <div className="overview-text">
+                                        <span className="overview-name">Latte</span>
+                                        <span className="overview-value">98 orders</span>
+                                    </div>
+                                    <div className="overview-line stroke-60"></div>
+                                </div>
+                                <div className="overview-item">
+                                    <div className="overview-text">
+                                        <span className="overview-name">Cappuccino</span>
+                                        <span className="overview-value">71 orders</span>
+                                    </div>
+                                    <div className="overview-line stroke-40"></div>
+                                </div>
+                                <div className="overview-revenue">
+                                    <span className="revenue-label">Revenue today</span>
+                                    <span className="revenue-value">1,984$</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="everything-card">
+                            <div className="card-header-horizontal">
+                                <img src={searchIcon} alt="discovery" className='feature-icon-small' />
+                                <h3 className="everything-card-title-horizontal">Shop Discovery</h3>
+                            </div>
+                            <p className="everything-card-desc-mt">
+                                Customers find you on our city map, browse your menu, and fall in love with your brand before even walking in.
+                            </p>
+                        </div>
+
+                        <div className="everything-card">
+                            <div className="card-header-horizontal">
+                                <img src={mobileIcon} alt="orders" className='feature-icon-small mobile-tall' />
+                                <h3 className="everything-card-title-horizontal">Order Management</h3>
+                            </div>
+                            <p className="everything-card-desc-mt">
+                                Receive and manage orders in real time. Customers order ahead, you brew on time — zero wasted cups.
+                            </p>
+                        </div>
+
+                        <div className="everything-card">
+                            <div className="card-header-horizontal">
+                                <img src={starIcon} alt="reviews" className='feature-icon-small star-gold' />
+                                <h3 className="everything-card-title-horizontal">Reviews & Loyalty</h3>
+                            </div>
+                            <p className="everything-card-desc-mt">
+                                Build trust with verified reviews, reward your regulars with loyalty points, and turn one-time visitors into regulars.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                {/* END Everything You Need Section */}
+
+
+                {/* ── Testimonials Section ── */}
+                <div className="testimonials-section" id="testimonials">
+                    <div className="testimonials-eyebrow">
+                        <div className="line-decoration-dark"></div>
+                        <p className="testimonials-tag">TESTIMONIALS</p>
+                    </div>
+                    <h2 className="testimonials-title">What shop Owners</h2>
+                    <h2 className="testimonials-title-gold">are saying</h2>
+
+                    <div className="testimonials-cards">
+                        <div className="testimonial-card">
+                            <div className="testimonial-stars">
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                            </div>
+                            <p className="testimonial-quote">
+                                "La Prima transformed how I run my shop. The dashboard alone saved me hours every week. My regulars love ordering ahead."
+                            </p>
+                            <div className="testimonial-author">
+                                <div className="author-avatar-emoji">
+                                    👩
+                                </div>
+                                <div className="author-info">
+                                    <h4 className="author-name">Hope KEZA</h4>
+                                    <p className="author-shop">Owner, Café Lumière</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="testimonial-card">
+                            <div className="testimonial-stars">
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                            </div>
+                            <p className="testimonial-quote">
+                                "Within a month of joining, my shop's online visibility doubled. New customers literally say they found me on La Prima."
+                            </p>
+                            <div className="testimonial-author">
+                                <div className="author-avatar-emoji">
+                                    👨
+                                </div>
+                                <div className="author-info">
+                                    <h4 className="author-name">Jessy Hales</h4>
+                                    <p className="author-shop">Owner, Brew & Co.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="testimonial-card">
+                            <div className="testimonial-stars">
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                                <img src={starIcon} alt="star" className='star-icon' />
+                            </div>
+                            <p className="testimonial-quote">
+                                "The menu builder is so simple. I updated our seasonal drinks in 5 minutes. My customers got notified automatically — brilliant."
+                            </p>
+                            <div className="testimonial-author">
+                                <div className="author-avatar-emoji">
+                                    👨
+                                </div>
+                                <div className="author-info">
+                                    <h4 className="author-name">Moran Russel</h4>
+                                    <p className="author-shop">Owner, The Daily Grind</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* END Testimonials Section */}
+
+
+                {/* ── CTA Section ── */}
+                <div className="cta-section">
+                    <div className="cta-content">
+                        <h2 className="cta-title">Your shop deserves a</h2>
+                        <h2 className="cta-title-gold">premier presence</h2>
+                        <p className="cta-description">
+                            Join thousands of coffee shop owners who have transformed their business with La Prima.
+                            Start your free trial today and see the difference.
+                        </p>
+                    <div className="cta-buttons">
+                            <button className="cta-primary-btn" onClick={() => navigate('/signup')}>Register Your Shop-Free</button>
+                            <button className="cta-secondary-btn" onClick={() => navigate('/explore')}>Explore Shops</button>
+                        </div>
+                    </div>
+                </div>
+                {/* END CTA Section */}
+
+
+                {/* ── Subscribe Section ── */}
+                <div className="subscribe-section">
+                    <div className="subscribe-content">
+                        <div className="subscribe-left">
+                            <img src={logo} alt="logo" className='subscribe-logo' />
+                        </div>
+                        <div className="subscribe-center">
+                            <h3 className="subscribe-title">Subscribe now</h3>
+                        </div>
+                        <div className="subscribe-right">
+                            <input type="email" placeholder="Your email" className="subscribe-input" />
+                            <button className="subscribe-btn">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+                {/* END Subscribe Section */}
             </div>
             {/* END WHITE SECTION */}
+
+
+            {/* ══════════════════════════════
+                FOOTER SECTION
+            ══════════════════════════════ */}
+            <div className="footer-section">
+                <div className="footer-content">
+                    <div className="footer-left">
+                        <img src={logo} alt="logo" className='footer-logo' />
+                        <p className="footer-tagline">
+                            The platform where coffee shop culture meets the digital world. Connecting owners and lovers of great coffee.
+                        </p>
+                    </div>
+
+                    <div className="footer-links">
+                        <div className="footer-column">
+                            <h4 className="footer-column-title">PLATFORM</h4>
+                            <a href="#/" className="footer-link">For shop owners</a>
+                            <a href="#/" className="footer-link">For Customers</a>
+                            <a href="#/" className="footer-link">Pricing</a>
+                            <a href="#features" className="footer-link">Features</a>
+                        </div>
+
+                        <div className="footer-column">
+                            <h4 className="footer-column-title">COMPANY</h4>
+                            <a href="#about" className="footer-link">About La Prima</a>
+                            <a href="#/" className="footer-link">Blog</a>
+                            <a href="#/" className="footer-link">Careers</a>
+                            <a href="#/" className="footer-link">Press</a>
+                        </div>
+
+                        <div className="footer-column">
+                            <h4 className="footer-column-title">SUPPORT</h4>
+                            <a href="#/" className="footer-link">Help Center</a>
+                            <a href="#/" className="footer-link">Contact Us</a>
+                            <a href="#/" className="footer-link">Privacy Policy</a>
+                            <a href="#/" className="footer-link">Terms</a>
+                        </div>
+
+                        <div className="footer-column contacts-col">
+                            <h4 className="footer-column-title">CONTACTS</h4>
+                            <p className="footer-contact-item"><img src={locationIcon} className="footer-contact-icon gold-icon" alt="" /> Muhanga, Rwanda</p>
+                            <p className="footer-contact-item"><img src={mobileIcon} className="footer-contact-icon gold-icon" alt="" /> 07832862521</p>
+                            <p className="footer-contact-item"><img src={mail} className="footer-contact-icon gold-icon" alt="" /> prisma@ac.rw</p>
+                            <div className="footer-social">
+                                <a href="#/" className="social-link">ig</a>
+                                <a href="#/" className="social-link">f</a>
+                                <a href="#/" className="social-link">tw</a>
+                                <a href="#/" className="social-link">in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="footer-bottom">
+                    <p className="footer-copyright">© 2026 La Prima. All rights are reserved</p>
+                    <p className="footer-madein">Made in La Prima for coffee lovers everywhere</p>
+                </div>
+            </div>
+            {/* END FOOTER SECTION */}
 
 
         </div>

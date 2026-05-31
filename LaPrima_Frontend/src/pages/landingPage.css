@@ -481,3 +481,622 @@ html, body, #root, .App {
     line-height: 1.7;
     margin-left: 50px;
 }
+
+/* ══════════════════════════════
+   EVERYTHING YOU NEED SECTION
+══════════════════════════════ */
+.everything-section {
+    background-color: #ffffff;
+    padding: 80px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.everything-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 8px;
+}
+
+.everything-tag {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 23px;
+    letter-spacing: 0.12em;
+    color: #2B211C;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+}
+
+.everything-title {
+    font-family: "Hedvig Letters Serif", serif;
+    font-size: 48px;
+    font-weight: 400;
+    color: #1C1208;
+    margin: 0;
+    text-align: center;
+}
+
+.everything-title-gold {
+    font-family: "Jim Nightshade", cursive;
+    font-size: 52px;
+    color: #DDA15E;
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 0 60px 0;
+    text-align: center;
+}
+
+.everything-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.everything-card {
+    border: 1px solid #E8D5BC;
+    border-radius: 12px;
+    padding: 32px 28px;
+    transition: box-shadow 0.3s, transform 0.2s;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.card-real-time {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.real-time-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.today-overview-box {
+    background-color: #DDA15E;
+    border-radius: 16px;
+    padding: 24px;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+}
+
+.today-overview-title {
+    font-family: 'Inria Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+    color: #2B211C;
+    text-transform: uppercase;
+}
+
+.overview-item {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.overview-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #2B211C;
+    font-size: 14px;
+    font-family: 'Inria Sans', sans-serif;
+    margin-bottom: 6px;
+}
+
+.overview-name {
+    font-weight: 400;
+}
+
+.overview-value {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.overview-line {
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 2px;
+}
+
+.stroke-100 {
+    width: 100%;
+}
+
+.stroke-60 {
+    width: 60%;
+}
+
+.stroke-40 {
+    width: 40%;
+}
+
+.overview-revenue {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.revenue-label {
+    font-size: 14px;
+    color: #2B211C;
+    margin-bottom: 4px;
+    font-family: 'Inria Sans', sans-serif;
+}
+
+.revenue-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2B211C;
+    font-family: "Hedvig Letters Serif", serif;
+}
+
+.view-dashboard-btn {
+    margin-top: auto;
+    background: transparent;
+    border: 1px solid #DDA15E;
+    border-radius: 20px;
+    padding: 8px 16px;
+    align-self: flex-start;
+    font-family: 'Inria Sans', sans-serif;
+    cursor: pointer;
+    font-size: 14px;
+    color: #1C1208;
+}
+
+.card-header-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.feature-icon-small {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.mobile-tall {
+    height: 36px;
+}
+
+.everything-card-title-horizontal {
+    font-family: "itim", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1C1208;
+    margin: 0;
+}
+
+.everything-card-desc-mt {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 18px;
+    color: #262626;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.everything-card:hover {
+    box-shadow: 0 8px 24px rgba(221, 161, 94, 0.15);
+    transform: translateY(-3px);
+}
+
+/* ══════════════════════════════
+   TESTIMONIALS SECTION
+══════════════════════════════ */
+.testimonials-section {
+    background-color: #ffffff;
+    padding: 80px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.testimonials-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 8px;
+}
+
+.testimonials-tag {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 23px;
+    letter-spacing: 0.12em;
+    color: #2B211C;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+}
+
+.testimonials-title {
+    font-family: "Hedvig Letters Serif", serif;
+    font-size: 48px;
+    font-weight: 400;
+    color: #1C1208;
+    margin: 0;
+    text-align: center;
+}
+
+.testimonials-title-gold {
+    font-family: "Jim Nightshade", cursive;
+    font-size: 52px;
+    color: #DDA15E;
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 0 60px 0;
+    text-align: center;
+}
+
+.testimonials-cards {
+    display: flex;
+    gap: 32px;
+    width: 100%;
+    justify-content: center;
+}
+
+.testimonial-card {
+    flex: 1;
+    max-width: 380px;
+    border: 1.5px solid #E8D5BC;
+    border-radius: 16px;
+    padding: 36px 32px;
+    transition: box-shadow 0.3s, transform 0.2s;
+    background: #fff;
+}
+
+.testimonial-card:hover {
+    box-shadow: 0 8px 24px rgba(221, 161, 94, 0.15);
+    transform: translateY(-3px);
+}
+
+.testimonial-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+}
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.testimonial-quote {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 18px;
+    color: #262626;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.author-avatar-emoji {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #DDA15E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: #fff;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-family: "itim", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1C1208;
+    margin: 0;
+}
+
+.author-shop {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    color: #9A7E60;
+    margin: 0;
+}
+
+/* ══════════════════════════════
+   CTA SECTION
+══════════════════════════════ */
+.cta-section {
+    background-color: #ffffff;
+    padding: 100px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cta-content {
+    text-align: center;
+    max-width: 800px;
+}
+
+.cta-title {
+    font-family: "Hedvig Letters Serif", serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: #1C1208;
+    margin: 0;
+}
+
+.cta-title-gold {
+    font-family: "Jim Nightshade", cursive;
+    font-size: 36px;
+    color: #DDA15E;
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 0 24px 0;
+}
+
+.cta-description {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 18px;
+    color: #262626;
+    line-height: 1.7;
+    margin-bottom: 40px;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.cta-primary-btn {
+    width: 250px;
+    height: 50px;
+    background-color: #DDA15E;
+    color: #1C1208;
+    font-size: 18px;
+    font-family: "itim", sans-serif;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cta-secondary-btn {
+    width: 200px;
+    height: 50px;
+    background-color: white;
+    color: #1C1208;
+    font-size: 18px;
+    font-family: "itim", sans-serif;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid #E8D5BC;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cta-secondary-btn:hover {
+    background-color: rgba(221, 161, 94, 0.1);
+}
+
+/* ══════════════════════════════
+   SUBSCRIBE SECTION
+══════════════════════════════ */
+.subscribe-section {
+    background-color: #ffffff;
+    padding: 60px 100px;
+    border-top: 1px solid #E8D5BC;
+    border-bottom: 1px solid #E8D5BC;
+    margin-top: 40px;
+}
+
+.subscribe-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.subscribe-logo {
+    width: 140px;
+}
+
+.subscribe-title {
+    font-family: "Hedvig Letters Serif", serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1C1208;
+    margin: 0;
+}
+
+.subscribe-right {
+    display: flex;
+    gap: 12px;
+}
+
+.subscribe-input {
+    padding: 12px 20px;
+    border: 1px solid #E8D5BC;
+    border-radius: 4px;
+    font-family: "Inria Sans", sans-serif;
+    width: 250px;
+    background: #FDF9F3;
+    font-size: 16px;
+    outline: none;
+}
+
+.subscribe-btn {
+    padding: 12px 24px;
+    background: #ffffff;
+    border: 1px solid #E8D5BC;
+    color: #1C1208;
+    font-family: "Inria Sans", sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* ══════════════════════════════
+   FOOTER SECTION
+══════════════════════════════ */
+.footer-section {
+    background-color: #ffffff;
+    padding: 60px 100px 40px 100px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap; /* Helps to avoid squishing if screen is tight */
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-left {
+    flex: 1;
+    min-width: 280px;
+    max-width: 320px;
+    margin-right: 40px;
+}
+
+.footer-logo {
+    width: 140px;
+    margin-bottom: 20px;
+}
+
+.footer-tagline {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    color: #262626;
+    line-height: 1.6;
+}
+
+.footer-links {
+    display: flex;
+    flex: 2;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer-column-title {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1C1208;
+    margin: 0;
+}
+
+.footer-link {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 15px;
+    color: #262626;
+    text-decoration: none;
+    transition: color 0.3s;
+    line-height: 1.5;
+}
+
+.footer-link:hover {
+    color: #DDA15E;
+}
+
+.footer-contact-item {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 15px;
+    color: #262626;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.5;
+}
+
+.footer-contact-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.gold-icon {
+    filter: invert(72%) sepia(35%) saturate(738%) hue-rotate(345deg) brightness(91%) contrast(87%);
+}
+
+.footer-social {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #DDA15E;
+    color: #DDA15E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 14px;
+    background: transparent;
+    transition: opacity 0.3s;
+}
+
+.social-link:hover {
+    opacity: 0.7;
+}
+
+.footer-bottom {
+    padding-top: 32px;
+    border-top: 1px solid #E8D5BC;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.footer-copyright, .footer-madein {
+    font-family: "Inria Sans", sans-serif;
+    font-size: 14px;
+    color: #262626;
+    margin: 0;
+}
