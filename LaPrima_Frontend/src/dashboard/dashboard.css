@@ -728,11 +728,9 @@
 .gauge-arc {
     width: 200px;
     height: 100px;
-    border: 16px solid #E8D4B8;
+    border: 16px solid rgba(221, 161, 94, 0.2);
     border-bottom: none;
     border-radius: 100px 100px 0 0;
-    border-left-color: #6B4423;
-    border-right-color: #C9A87C;
 }
 
 .gauge-value {
@@ -763,9 +761,9 @@
     margin-right: 4px;
 }
 
-.gauge-dot.high { background: #6B4423; }
-.gauge-dot.medium { background: #C9A87C; }
-.gauge-dot.low { background: #E8D4B8; }
+.gauge-dot.high { background: #DDA15E; }
+.gauge-dot.medium { background: rgba(221, 161, 94, 0.5); }
+.gauge-dot.low { background: rgba(221, 161, 94, 0.2); }
 
 .settings-grid {
     display: grid;
