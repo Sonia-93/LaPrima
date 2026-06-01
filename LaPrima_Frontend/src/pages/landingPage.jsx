@@ -13,13 +13,100 @@ import locationIconAsset from "../location.svg";
 import mobileIcon from "../heroicons-outline_device-phone-mobile.svg";
 import locationIcon from "../heroicons-outline_location-marker.svg";
 import searchIcon from "../heroicons-outline_search.svg";
-import starIcon from "../heroicons-outline_star.svg";
 import mailIcon from "../mail.svg";
 import mail from "../mail.svg";
 import landing1 from '../landing1.jpeg';
 import landing2 from '../landing2.jpeg';
 import landing3 from '../landing3.jpeg';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { LuCoffee, LuStore, LuSparkles } from 'react-icons/lu';
+import { FaStar, FaUserCircle } from 'react-icons/fa';
+
+const HERO_IMAGES = [
+    {
+        src: landing1,
+        Icon: LuCoffee,
+        title: 'Coffee First',
+        desc: 'La Prima helps you start every morning — manage orders, menus, and loyal regulars in one place.',
+    },
+    {
+        src: landing2,
+        Icon: LuStore,
+        title: 'Grow Your Shop',
+        desc: 'Put your coffee shop on the map. Reach new customers and build your community online.',
+    },
+    {
+        src: landing3,
+        Icon: LuSparkles,
+        title: 'Sip & Savor',
+        desc: 'Discover curated menus, order ahead, and connect with the coffee lovers who matter most.',
+    },
+];
+const POSITION_CLASSES = ['card-front', 'card-middle', 'card-back'];
+
+function HeroImageStack() {
+    const [order, setOrder] = useState([0, 1, 2]);
+    const intervalRef = useRef(null);
+
+    const rotateForward = useCallback(() => {
+        setOrder((prev) => [prev[1], prev[2], prev[0]]);
+    }, []);
+
+    const resetAutoRotate = useCallback(() => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        intervalRef.current = setInterval(rotateForward, 5000);
+    }, [rotateForward]);
+
+    useEffect(() => {
+        resetAutoRotate();
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
+    }, [resetAutoRotate]);
+
+    const handleImageClick = (position) => {
+        if (position === 0) return;
+        setOrder((prev) => {
+            if (position === 1) return [prev[1], prev[0], prev[2]];
+            return [prev[2], prev[0], prev[1]];
+        });
+        resetAutoRotate();
+    };
+
+    return (
+        <div className="hero-stacked-cards">
+            {order.map((imgIndex, position) => {
+                const slide = HERO_IMAGES[imgIndex];
+                const SlideIcon = slide.Icon;
+                return (
+                <div
+                    key={imgIndex}
+                    className={`stacked-card-wrapper ${POSITION_CLASSES[position]}${position !== 0 ? ' stacked-card-clickable' : ''}`}
+                    onClick={() => handleImageClick(position)}
+                >
+                    <img
+                        src={slide.src}
+                        alt={`Coffee shop ${imgIndex + 1}`}
+                        className="stacked-card"
+                    />
+                    {position === 0 && (
+                        <div className="stacked-card-overlay">
+                            <div className="stacked-card-overlay-header">
+                                <span className="stacked-card-icon">
+                                    <SlideIcon aria-hidden />
+                                </span>
+                                <span className="stacked-card-title">{slide.title}</span>
+                            </div>
+                            <p className="stacked-card-desc">{slide.desc}</p>
+                        </div>
+                    )}
+                </div>
+                );
+            })}
+        </div>
+    );
+}
 
 function LandingPage() {
     const navigate = useNavigate();
@@ -34,13 +121,15 @@ function LandingPage() {
                 {/* Navbar */}
                 <div className="landing-navbar">
                     <img src={logo} alt="logo" className='logo-image' />
-                    <div className="navbar-links">
-                        <a href="#about">About</a>
-                        <a href="#how-it-works">How it works</a>
-                        <a href="#features">Features</a>
-                        <a href="#testimonials">Testimonials</a>
+                    <div className="navbar-right">
+                        <nav className="navbar-links">
+                            <a href="#about">About</a>
+                            <a href="#how-it-works">How it works</a>
+                            <a href="#features">Features</a>
+                            <a href="#testimonials">Testimonials</a>
+                        </nav>
+                        <button className="navbar-join-btn" onClick={() => navigate('/signup')}>Join Us</button>
                     </div>
-                    <button className="navbar-join-btn" onClick={() => navigate('/signup')}>Join Us</button>
                 </div>
 
                 {/* Hero Content */}
@@ -62,13 +151,28 @@ function LandingPage() {
                             <button className="landing-register" onClick={() => navigate('/signup')}>Register your shop</button>
                             <button className="landing-register-btn2" onClick={() => navigate('/#how-it-works')}>See how it works</button>
                         </div>
+
+                        <div className="hero-stats">
+                            <div className="hero-stat-item">
+                                <span className="hero-stat-num">100+</span>
+                                <span className="hero-stat-label">Shops Registered</span>
+                            </div>
+                            <div className="hero-stat-item">
+                                <span className="hero-stat-num">42+</span>
+                                <span className="hero-stat-label">Coffee Lovers</span>
+                            </div>
+                            <div className="hero-stat-item">
+                                <span className="hero-stat-num">180k+</span>
+                                <span className="hero-stat-label">Orders Placed</span>
+                            </div>
+                            <div className="hero-stat-item">
+                                <span className="hero-stat-num">80%</span>
+                                <span className="hero-stat-label">Efficiency</span>
+                            </div>
+                        </div>
                     </div>
                     <div className="right">
-                        <div className="hero-stacked-cards">
-                            <img src={landing3} alt="Landing 3" className="stacked-card card-back" />
-                            <img src={landing2} alt="Landing 2" className="stacked-card card-middle" />
-                            <img src={landing1} alt="Landing 1" className="stacked-card card-front" />
-                        </div>
+                        <HeroImageStack />
                     </div>
                 </div>
 
@@ -80,31 +184,6 @@ function LandingPage() {
                 WHITE SECTION
             ══════════════════════════════ */}
             <div className="white-section">
-
-                {/* ── Stats Card (bridges dark + white) ── */}
-                <div className="landing-rectangle">
-                    <div className="stat-item">
-                        <span className="stat-num">100+</span>
-                        <span className="stat-label">Shops Registered</span>
-                    </div>
-                    <div className="stat-divider"></div>
-                    <div className="stat-item">
-                        <span className="stat-num">42+</span>
-                        <span className="stat-label">Coffee Lovers</span>
-                    </div>
-                    <div className="stat-divider"></div>
-                    <div className="stat-item">
-                        <span className="stat-num">180k+</span>
-                        <span className="stat-label">Cities</span>
-                    </div>
-                    <div className="stat-divider"></div>
-                    <div className="stat-item">
-                        <span className="stat-num">80%</span>
-                        <span className="stat-label">Efficiency</span>
-                    </div>
-                </div>
-                {/* END Stats Card */}
-
 
                 {/* ── Built For ── */}
                 <div className="built-for-section" id="about">
@@ -261,7 +340,7 @@ function LandingPage() {
                                 <p className="everything-card-desc">
                                     Track your daily sales, popular items, peak hours, and customer trends from a single beautiful dashboard. Know your business inside out.
                                 </p>
-                                <button className="view-dashboard-btn">View dashboard &rarr;</button>
+                                <button className="view-dashboard-btn" onClick={() => navigate('/dashboard')}>View dashboard &rarr;</button>
                             </div>
                             <div className="today-overview-box">
                                 <h4 className="today-overview-title">TODAY'S OVERVIEW</h4>
@@ -315,7 +394,7 @@ function LandingPage() {
 
                         <div className="everything-card">
                             <div className="card-header-horizontal">
-                                <img src={starIcon} alt="reviews" className='feature-icon-small star-gold' />
+                                <FaStar className="feature-icon-small star-gold-react" aria-hidden />
                                 <h3 className="everything-card-title-horizontal">Reviews & Loyalty</h3>
                             </div>
                             <p className="everything-card-desc-mt">
@@ -340,18 +419,16 @@ function LandingPage() {
                     <div className="testimonials-cards">
                         <div className="testimonial-card">
                             <div className="testimonial-stars">
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
+                                {[...Array(5)].map((_, i) => (
+                                    <FaStar key={i} className="star-icon-react" aria-hidden />
+                                ))}
                             </div>
                             <p className="testimonial-quote">
                                 "La Prima transformed how I run my shop. The dashboard alone saved me hours every week. My regulars love ordering ahead."
                             </p>
                             <div className="testimonial-author">
-                                <div className="author-avatar-emoji">
-                                    👩
+                                <div className="author-avatar-icon">
+                                    <FaUserCircle aria-hidden />
                                 </div>
                                 <div className="author-info">
                                     <h4 className="author-name">Hope KEZA</h4>
@@ -362,18 +439,16 @@ function LandingPage() {
 
                         <div className="testimonial-card">
                             <div className="testimonial-stars">
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
+                                {[...Array(5)].map((_, i) => (
+                                    <FaStar key={i} className="star-icon-react" aria-hidden />
+                                ))}
                             </div>
                             <p className="testimonial-quote">
                                 "Within a month of joining, my shop's online visibility doubled. New customers literally say they found me on La Prima."
                             </p>
                             <div className="testimonial-author">
-                                <div className="author-avatar-emoji">
-                                    👨
+                                <div className="author-avatar-icon">
+                                    <FaUserCircle aria-hidden />
                                 </div>
                                 <div className="author-info">
                                     <h4 className="author-name">Jessy Hales</h4>
@@ -384,18 +459,16 @@ function LandingPage() {
 
                         <div className="testimonial-card">
                             <div className="testimonial-stars">
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
-                                <img src={starIcon} alt="star" className='star-icon' />
+                                {[...Array(5)].map((_, i) => (
+                                    <FaStar key={i} className="star-icon-react" aria-hidden />
+                                ))}
                             </div>
                             <p className="testimonial-quote">
                                 "The menu builder is so simple. I updated our seasonal drinks in 5 minutes. My customers got notified automatically — brilliant."
                             </p>
                             <div className="testimonial-author">
-                                <div className="author-avatar-emoji">
-                                    👨
+                                <div className="author-avatar-icon">
+                                    <FaUserCircle aria-hidden />
                                 </div>
                                 <div className="author-info">
                                     <h4 className="author-name">Moran Russel</h4>

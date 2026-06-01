@@ -70,7 +70,7 @@ function AuthCarousel() {
 
                     {slide.testimonial && (
                         <div className="carousel-testimonial">
-                            <div className="testimonial-stars">★★★★</div>
+                            <div className="testimonial-stars">★★★★★</div>
                             <p className="testimonial-text">{slide.testimonial.text}</p>
                             <div className="testimonial-author-block">
                                 <img src={userAvatar} alt="Hope Keza" className="testimonial-avatar" />
