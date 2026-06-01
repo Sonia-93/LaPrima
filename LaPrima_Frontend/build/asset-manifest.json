@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.57370bda.css",
-    "main.js": "/static/js/main.b4ad8aff.js",
+    "main.css": "/static/css/main.ea5c62c4.css",
+    "main.js": "/static/js/main.e83b5392.js",
     "static/media/frame2.svg": "/static/media/frame2.609b7dea4612a66662e9b0e82eb603ac.svg",
     "static/media/landing2.jpeg": "/static/media/landing2.3f8bf430388349ab3fac.jpeg",
     "static/media/login_image.jpeg": "/static/media/login_image.271d7ee24b65eb2716c9.jpeg",
@@ -24,11 +24,11 @@
     "static/media/heroicons-outline_device-phone-mobile.svg": "/static/media/heroicons-outline_device-phone-mobile.f950440f9fe2103ff6847490fd2d0710.svg",
     "static/media/menu.svg": "/static/media/menu.efea8feb1c1a5272c69a20dee4a15e2f.svg",
     "static/media/👩.svg": "/static/media/👩.5025c3ea30a45412638956db8693aa81.svg",
-    "main.57370bda.css.map": "/static/css/main.57370bda.css.map",
-    "main.b4ad8aff.js.map": "/static/js/main.b4ad8aff.js.map"
+    "main.ea5c62c4.css.map": "/static/css/main.ea5c62c4.css.map",
+    "main.e83b5392.js.map": "/static/js/main.e83b5392.js.map"
   },
   "entrypoints": [
-    "static/css/main.57370bda.css",
-    "static/js/main.b4ad8aff.js"
+    "static/css/main.ea5c62c4.css",
+    "static/js/main.e83b5392.js"
   ]
 }
