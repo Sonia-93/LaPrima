@@ -5,8 +5,11 @@ import LoginPage from './auth/loginPage';
 import VerifyEmailPage from './auth/verifyEmailPage';
 import DashboardLayout from './dashboard/DashboardLayout';
 import DashboardHome from './dashboard/pages/DashboardHome';
+import OrdersPage from './dashboard/pages/OrdersPage';
+import MenuPage from './dashboard/pages/MenuPage';
+import AnalyticsPage from './dashboard/pages/AnalyticsPage';
+import SettingsPage from './dashboard/pages/SettingsPage';
 import UsersPage from './dashboard/pages/UsersPage';
-import PlaceholderPage from './dashboard/pages/PlaceholderPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -20,11 +23,11 @@ function App() {
           <Route path="/verify" element={<VerifyEmailPage />} />
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardHome />} />
-            <Route path="orders" element={<PlaceholderPage title="Orders" description="Order management coming soon." />} />
-            <Route path="menu" element={<PlaceholderPage title="Menu" description="Menu builder coming soon." />} />
-            <Route path="analytics" element={<PlaceholderPage title="Analytics" description="Detailed analytics coming soon." />} />
+            <Route path="orders" element={<OrdersPage />} />
+            <Route path="menu" element={<MenuPage />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
             <Route path="users" element={<UsersPage />} />
-            <Route path="settings" element={<PlaceholderPage title="Settings" description="Shop settings coming soon." />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </div>

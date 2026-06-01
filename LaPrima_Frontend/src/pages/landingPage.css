@@ -14,42 +14,45 @@ body,
 
 
 .landing-page {
-    background-color: #1A120F;
+    background-color: #2B211C;
     min-height: 100vh;
     width: 100%;
 }
 
 
 .hero-section {
-    background: linear-gradient(165deg, #1A120F 0%, #2B211C 42%, #1F1814 100%);
-    padding: 0 0 60px;
+    background-color: #2B211C;
+    min-height: 100vh;
+    padding: 0 0 100px;
     position: relative;
 }
 
 .landing-navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 28px 48px 0;
+    padding: 32px 48px 0;
     width: 100%;
 }
 
 .logo-image {
     width: 160px;
+    mix-blend-mode: lighten;
     flex-shrink: 0;
 }
 
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 36px;
+    gap: 48px;
+    margin-top: 28px;
 }
 
 .navbar-links {
     display: flex;
-    gap: 28px;
+    gap: 40px;
     align-items: center;
 }
 
@@ -85,8 +88,8 @@ body,
     justify-content: space-between;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 56px 48px 40px;
-    gap: 32px;
+    padding: 72px 48px 60px;
+    gap: 64px;
     position: relative;
 }
 
@@ -103,8 +106,9 @@ body,
     flex: 1;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-start;
     padding-right: 0;
+    padding-top: 20px;
 }
 
 .landing-page-container {
@@ -133,8 +137,8 @@ body,
     font-size: 46px;
     font-family: "Hedvig Letters Serif", serif;
     font-weight: 400;
-    margin-top: 24px;
-    line-height: 1.1;
+    margin-top: 28px;
+    line-height: 1.15;
 }
 
 .landing-page-subtitle-coffee {
@@ -142,7 +146,8 @@ body,
     font-family: "Jim Nightshade", cursive;
     font-weight: 400;
     font-size: 54px;
-    line-height: 1.1;
+    line-height: 1.15;
+    margin-top: 4px;
 }
 
 .landing-page-subtitle-secondary {
@@ -150,13 +155,14 @@ body,
     font-size: 46px;
     font-family: "Hedvig Letters Serif", serif;
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.15;
+    margin-top: 4px;
 }
 
 .landing-page-description {
     color: rgb(215, 214, 214);
     font-size: 17px;
-    margin-top: 16px;
+    margin-top: 22px;
     font-family: "Inria Sans", sans-serif;
     font-style: italic;
     line-height: 1.6;
@@ -165,8 +171,8 @@ body,
 
 .landing-buttons {
     display: flex;
-    margin-top: 28px;
-    gap: 16px;
+    margin-top: 32px;
+    gap: 20px;
 }
 
 .landing-register {
@@ -197,9 +203,9 @@ body,
 
 .hero-stats {
     display: flex;
-    gap: 36px;
-    margin-top: 36px;
-    padding-top: 28px;
+    gap: 40px;
+    margin-top: 44px;
+    padding-top: 32px;
     border-top: 1px solid rgba(221, 161, 94, 0.25);
     flex-wrap: wrap;
 }
@@ -232,7 +238,7 @@ body,
     width: 340px;
     height: 460px;
     margin-left: 80px;
-    margin-top: 10px;
+    margin-top: 48px;
     flex-shrink: 0;
 }
 

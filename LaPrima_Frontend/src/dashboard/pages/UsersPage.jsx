@@ -22,11 +22,6 @@ function UsersPage() {
 
     return (
         <>
-            <div className="page-header">
-                <h1 className="page-title">Users</h1>
-                <p className="page-subtitle">Manage your shop team members and their roles.</p>
-            </div>
-
             <div className="dashboard-card">
                 <div className="users-toolbar">
                     <input

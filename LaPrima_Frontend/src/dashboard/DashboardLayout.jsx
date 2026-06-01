@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../logo.svg';
 import userAvatar from '../👩.svg';
 import './dashboard.css';
@@ -68,8 +68,18 @@ const navItems = [
     },
 ];
 
+const PAGE_HEADERS = {
+    '/dashboard': null,
+    '/dashboard/orders': { title: 'Orders', subtitle: "Manage today's incoming orders" },
+    '/dashboard/menu': { title: 'Menu', subtitle: '6 items · 1 sold out' },
+    '/dashboard/analytics': { title: 'BusinessOverview', subtitle: 'Financial overview' },
+    '/dashboard/users': { title: 'Users', subtitle: 'Manage your shop team members' },
+    '/dashboard/settings': { title: 'Settings', subtitle: 'Account and Preferences' },
+};
+
 function DashboardLayout() {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     const today = new Date().toLocaleDateString('en-US', {
         weekday: 'long',
@@ -77,6 +87,9 @@ function DashboardLayout() {
         month: 'long',
         day: 'numeric',
     });
+
+    const pageHeader = PAGE_HEADERS[pathname];
+    const isDashboardHome = pathname === '/dashboard' || pathname === '/dashboard/';
 
     return (
         <div className="dashboard-layout">
@@ -100,7 +113,7 @@ function DashboardLayout() {
                 </nav>
 
                 <div className="dashboard-logout">
-                    <button className="dashboard-logout-btn" onClick={() => navigate('/')}>
+                    <button type="button" className="dashboard-logout-btn" onClick={() => navigate('/')}>
                         <svg className="dashboard-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                             <polyline points="16 17 21 12 16 7" />
@@ -113,7 +126,16 @@ function DashboardLayout() {
 
             <div className="dashboard-main">
                 <header className="dashboard-header">
-                    <span className="dashboard-date">{today} — Your shop is live</span>
+                    <div className="dashboard-header-left">
+                        {isDashboardHome ? (
+                            <span className="dashboard-date">{today} — Your shop is live</span>
+                        ) : pageHeader ? (
+                            <>
+                                <h1 className="dashboard-page-title">{pageHeader.title}</h1>
+                                <p className="dashboard-page-subtitle">{pageHeader.subtitle}</p>
+                            </>
+                        ) : null}
+                    </div>
                     <div className="dashboard-header-right">
                         <div className="dashboard-notifications">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaStar, FaUserCircle } from 'react-icons/fa';
+import WeeklyRevenueChart from '../components/WeeklyRevenueChart';
 
 const stats = [
     { label: 'REVENUE TODAY', value: '$123,000', icon: 'wallet' },
@@ -56,37 +57,6 @@ function StatIcon({ type }) {
     return icons[type] || null;
 }
 
-function RevenueChart() {
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const series = [
-        { color: '#DDA15E', points: '20,55 60,45 100,60 140,35 180,50 220,30 260,55' },
-        { color: '#8B6914', points: '20,70 60,65 100,75 140,55 180,70 220,50 260,65' },
-        { color: '#C4A882', points: '20,85 60,80 100,90 140,70 180,85 220,65 260,80' },
-    ];
-
-    return (
-        <div>
-            <svg className="revenue-chart" viewBox="0 0 280 200" preserveAspectRatio="none">
-                {[0, 1, 2, 3].map((i) => (
-                    <line key={i} x1="20" y1={20 + i * 55} x2="260" y2={20 + i * 55} stroke="#f0f0f0" strokeWidth="1" />
-                ))}
-                {series.map((s, i) => (
-                    <polyline key={i} points={s.points} fill="none" stroke={s.color} strokeWidth="2" strokeDasharray="6 4" />
-                ))}
-                {series[0].points.split(' ').map((pt, i) => {
-                    const [x, y] = pt.split(',');
-                    return <circle key={i} cx={x} cy={y} r="3" fill="#DDA15E" />;
-                })}
-            </svg>
-            <div className="revenue-chart-labels">
-                {days.map((d) => (
-                    <span key={d}>{d}</span>
-                ))}
-            </div>
-        </div>
-    );
-}
-
 function DashboardHome() {
     return (
         <>
@@ -105,9 +75,8 @@ function DashboardHome() {
             </div>
 
             <div className="dashboard-middle-row">
-                <div className="dashboard-card">
-                    <h3 className="dashboard-card-title">Weekly Revenue</h3>
-                    <RevenueChart />
+                <div className="dashboard-card weekly-revenue-card">
+                    <WeeklyRevenueChart />
                 </div>
 
                 <div className="dashboard-card">
