@@ -111,6 +111,8 @@ body,
     display: flex;
     align-items: center;
 }
+
+.line-decoration {
     width: 70px;
     height: 1px;
     background-color: #DDA15E;
