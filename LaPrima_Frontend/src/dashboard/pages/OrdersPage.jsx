@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HiOutlineShoppingCart, HiOutlineFire, HiOutlineCheckCircle, HiOutlineCurrencyDollar } from 'react-icons/hi';
 import { FiTrash2, FiEdit2 } from 'react-icons/fi';
+import DashboardModal from '../components/DashboardModal';
+import AddOrderForm from '../components/AddOrderForm';
 
-const summary = [
-    { label: 'NEW ORDERS', value: '5', icon: HiOutlineShoppingCart },
-    { label: 'PREPARING', value: '8', icon: HiOutlineFire },
-    { label: 'COMPLETED TODAY', value: '129', icon: HiOutlineCheckCircle },
-    { label: 'REVENUE TODAY', value: '$890', icon: HiOutlineCurrencyDollar },
-];
-
-const orders = [
+const INITIAL_ORDERS = [
     { id: '#100', customer: 'Aisha.K', items: 'Double Expresso', money: '$8.50', time: '2min ago', status: 'new' },
     { id: '#101', customer: 'Russel .M', items: 'Iced Latte x 2', money: '$9.50', time: '5min ago', status: 'preparing' },
     { id: '#102', customer: 'Jessy.N', items: '—', money: '$14.50', time: '8min ago', status: 'ready' },
@@ -18,6 +13,39 @@ const orders = [
 ];
 
 function OrdersPage() {
+    const [orders, setOrders] = useState(INITIAL_ORDERS);
+    const [showAddModal, setShowAddModal] = useState(false);
+
+    const newCount = orders.filter((o) => o.status === 'new').length;
+    const preparingCount = orders.filter((o) => o.status === 'preparing').length;
+
+    const summary = [
+        { label: 'NEW ORDERS', value: String(newCount), icon: HiOutlineShoppingCart },
+        { label: 'PREPARING', value: String(preparingCount), icon: HiOutlineFire },
+        { label: 'COMPLETED TODAY', value: '129', icon: HiOutlineCheckCircle },
+        { label: 'REVENUE TODAY', value: '$890', icon: HiOutlineCurrencyDollar },
+    ];
+
+    const handleAddOrder = (data) => {
+        const nextId = `#${100 + orders.length}`;
+        setOrders((prev) => [
+            {
+                id: nextId,
+                customer: data.customer,
+                items: data.items,
+                money: data.money,
+                time: 'Just now',
+                status: data.status,
+            },
+            ...prev,
+        ]);
+        setShowAddModal(false);
+    };
+
+    const removeOrder = (index) => {
+        setOrders((prev) => prev.filter((_, i) => i !== index));
+    };
+
     return (
         <>
             <div className="orders-summary-row">
@@ -35,7 +63,9 @@ function OrdersPage() {
 
             <div className="dashboard-card orders-table-card">
                 <div className="orders-table-toolbar">
-                    <button type="button" className="dash-btn-primary">Add Order</button>
+                    <button type="button" className="dash-btn-primary" onClick={() => setShowAddModal(true)}>
+                        Add Order
+                    </button>
                 </div>
                 <table className="orders-table">
                     <thead>
@@ -63,7 +93,7 @@ function OrdersPage() {
                                     </span>
                                 </td>
                                 <td className="orders-actions">
-                                    <button type="button" className="icon-btn" aria-label="Delete">
+                                    <button type="button" className="icon-btn" aria-label="Delete" onClick={() => removeOrder(idx)}>
                                         <FiTrash2 />
                                     </button>
                                     <button type="button" className="icon-btn" aria-label="Edit">
@@ -75,6 +105,13 @@ function OrdersPage() {
                     </tbody>
                 </table>
             </div>
+
+            <DashboardModal open={showAddModal} onClose={() => setShowAddModal(false)} title="Add Order">
+                <AddOrderForm
+                    onSubmit={handleAddOrder}
+                    onCancel={() => setShowAddModal(false)}
+                />
+            </DashboardModal>
         </>
     );
 }

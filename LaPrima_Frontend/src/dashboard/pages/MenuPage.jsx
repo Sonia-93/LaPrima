@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FiTrash2, FiEdit2 } from 'react-icons/fi';
+import DashboardModal from '../components/DashboardModal';
+import AddMenuItemForm from '../components/AddMenuItemForm';
 
 const categories = [
     { id: 'all', label: 'All(6)' },
@@ -9,7 +11,7 @@ const categories = [
     { id: 'chinese', label: 'chinese' },
 ];
 
-const menuItems = [
+const INITIAL_ITEMS = [
     { name: 'Expresso', category: 'Hot Drinks', orders: 134, price: '$3.50', status: 'active' },
     { name: 'Milk shake', category: 'Cold Drinks', orders: 98, price: '$4.50', status: 'active' },
     { name: 'Chicken Burger', category: 'Fast Food', orders: 71, price: '$5.50', status: 'active' },
@@ -19,7 +21,27 @@ const menuItems = [
 ];
 
 function MenuPage() {
+    const [menuItems, setMenuItems] = useState(INITIAL_ITEMS);
     const [activeCat, setActiveCat] = useState('all');
+    const [showAddModal, setShowAddModal] = useState(false);
+
+    const filtered = menuItems.filter((item) => {
+        if (activeCat === 'all') return true;
+        if (activeCat === 'hot') return item.category === 'Hot Drinks';
+        if (activeCat === 'cold') return item.category === 'Cold Drinks';
+        if (activeCat === 'fast') return item.category === 'Fast Food';
+        if (activeCat === 'chinese') return item.category === 'chinese';
+        return true;
+    });
+
+    const handleAddItem = (data) => {
+        setMenuItems((prev) => [...prev, data]);
+        setShowAddModal(false);
+    };
+
+    const removeItem = (name) => {
+        setMenuItems((prev) => prev.filter((item) => item.name !== name));
+    };
 
     return (
         <>
@@ -32,15 +54,17 @@ function MenuPage() {
                             className={`menu-cat-btn${activeCat === cat.id ? ' active' : ''}`}
                             onClick={() => setActiveCat(cat.id)}
                         >
-                            {cat.label}
+                            {cat.id === 'all' ? `All(${menuItems.length})` : cat.label}
                         </button>
                     ))}
                 </div>
-                <button type="button" className="dash-btn-primary">Add Item</button>
+                <button type="button" className="dash-btn-primary" onClick={() => setShowAddModal(true)}>
+                    Add Item
+                </button>
             </div>
 
             <div className="menu-grid">
-                {menuItems.map((item) => (
+                {filtered.map((item) => (
                     <div key={item.name} className="menu-item-card">
                         <div className="menu-item-card-top">
                             <span className="menu-item-card-name">{item.name}</span>
@@ -54,7 +78,7 @@ function MenuPage() {
                         <div className="menu-item-card-footer">
                             <span className="menu-item-card-price">{item.price}</span>
                             <div className="menu-item-card-actions">
-                                <button type="button" className="icon-btn" aria-label="Delete">
+                                <button type="button" className="icon-btn" aria-label="Delete" onClick={() => removeItem(item.name)}>
                                     <FiTrash2 />
                                 </button>
                                 <button type="button" className="icon-btn" aria-label="Edit">
@@ -65,6 +89,13 @@ function MenuPage() {
                     </div>
                 ))}
             </div>
+
+            <DashboardModal open={showAddModal} onClose={() => setShowAddModal(false)} title="Add Menu Item">
+                <AddMenuItemForm
+                    onSubmit={handleAddItem}
+                    onCancel={() => setShowAddModal(false)}
+                />
+            </DashboardModal>
         </>
     );
 }

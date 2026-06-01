@@ -1,13 +1,14 @@
 import React from 'react';
 import { HiOutlineChartBar } from 'react-icons/hi';
+import { primaGold } from '../chartColors';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 const Y_LABELS = ['0', '10$', '40$', '80$'];
 
 const SERIES = [
-    { color: '#C9A87C', values: [15, 20, 24, 28, 32, 38, 45] },
-    { color: '#6B4423', values: [30, 42, 48, 58, 75, 65, 50] },
-    { color: '#1C1208', values: [40, 35, 50, 55, 65, 72, 80] },
+    { opacity: 0.2, values: [15, 20, 24, 28, 32, 38, 45] },
+    { opacity: 0.5, values: [30, 42, 48, 58, 75, 65, 50] },
+    { opacity: 1, values: [40, 35, 50, 55, 65, 72, 80] },
 ];
 
 const PAD = { left: 52, top: 28, right: 24, bottom: 40 };
@@ -80,19 +81,20 @@ function WeeklyRevenueChart() {
                     );
                 })}
                 {SERIES.map((s) => {
+                    const color = primaGold(s.opacity);
                     const points = s.values.map((v, i) => toPoint(i, v));
                     return (
-                        <g key={s.color}>
+                        <g key={s.opacity}>
                             <path
                                 d={buildSmoothPath(points)}
                                 fill="none"
-                                stroke={s.color}
+                                stroke={color}
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                             />
                             {points.map((p, i) => (
-                                <circle key={i} cx={p.x} cy={p.y} r="4" fill={s.color} />
+                                <circle key={i} cx={p.x} cy={p.y} r="4" fill={color} />
                             ))}
                         </g>
                     );

@@ -1,5 +1,7 @@
 import React from 'react';
 import { HiOutlineShoppingBag, HiOutlineShoppingCart, HiOutlineOfficeBuilding } from 'react-icons/hi';
+import { buildConicGradient, CHART_GOLD, primaGold } from '../chartColors';
+import LabeledPieChart from '../components/LabeledPieChart';
 
 const topStats = [
     { label: 'Revenue this Year', value: '$900,000', icon: HiOutlineShoppingBag },
@@ -7,11 +9,23 @@ const topStats = [
     { label: 'Coffee shops Joined', value: '5K', icon: HiOutlineOfficeBuilding },
 ];
 
-const donutSegments = [
-    { label: 'Hot Drinks', pct: 35, color: '#6B4423' },
-    { label: 'Fast Foods', pct: 30, color: '#8B6914' },
-    { label: 'Cold Drinks', pct: 20, color: '#C9A87C' },
-    { label: 'Chinese', pct: 15, color: '#E8D4B8' },
+const weekDonutSegments = [
+    { label: 'Hot Drinks', pct: 35, opacity: 1 },
+    { label: 'Fast Foods', pct: 30, opacity: 0.5 },
+    { label: 'Cold Drinks', pct: 20, opacity: 0.5 },
+    { label: 'Chinese', pct: 15, opacity: 0.2 },
+];
+
+const deliveryPieSegments = [
+    { pct: 45, opacity: 1, label: '86.4%' },
+    { pct: 30, opacity: 0.5, label: '42%' },
+    { pct: 25, opacity: 0.2, label: '60.7%' },
+];
+
+const deliveryLegend = [
+    { label: 'On Time', opacity: 1 },
+    { label: 'Delayed', opacity: 0.5 },
+    { label: 'Missed', opacity: 0.2 },
 ];
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'];
@@ -19,14 +33,7 @@ const kigaliBars = [35, 42, 48, 55, 60, 58, 65, 70];
 const otherBars = [25, 30, 28, 38, 40, 45, 42, 48];
 
 function AnalyticsPage() {
-    let cumulative = 0;
-    const donutGradient = donutSegments
-        .map((seg) => {
-            const start = cumulative;
-            cumulative += seg.pct;
-            return `${seg.color} ${start}% ${cumulative}%`;
-        })
-        .join(', ');
+    const weekDonutGradient = buildConicGradient(weekDonutSegments);
 
     return (
         <>
@@ -43,24 +50,50 @@ function AnalyticsPage() {
                 })}
             </div>
 
-            <div className="analytics-middle-row">
+            <div className="analytics-charts-row">
                 <div className="dashboard-card analytics-donut-card">
                     <h3 className="dashboard-card-title">Orders In week</h3>
-                    <div className="donut-chart-wrap">
-                        <div
-                            className="donut-chart"
-                            style={{ background: `conic-gradient(${donutGradient})` }}
-                        />
-                        <div className="donut-hole" />
+                    <div className="analytics-chart-body">
+                        <div className="donut-chart-wrap">
+                            <div
+                                className="donut-chart"
+                                style={{ background: `conic-gradient(${weekDonutGradient})` }}
+                            />
+                            <div className="donut-hole" />
+                        </div>
+                        <ul className="donut-legend">
+                            {weekDonutSegments.map((seg) => (
+                                <li key={seg.label}>
+                                    <span
+                                        className="donut-legend-dot"
+                                        style={{ background: primaGold(seg.opacity) }}
+                                    />
+                                    {seg.label} ({seg.pct}%)
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                    <ul className="donut-legend">
-                        {donutSegments.map((seg) => (
-                            <li key={seg.label}>
-                                <span className="donut-legend-dot" style={{ background: seg.color }} />
-                                {seg.label} ({seg.pct}%)
-                            </li>
-                        ))}
-                    </ul>
+                </div>
+
+                <div className="dashboard-card analytics-pie-card">
+                    <div className="chart-card-header">
+                        <h3 className="dashboard-card-title">Delivery Performance</h3>
+                        <button type="button" className="chart-filter-btn">Annual</button>
+                    </div>
+                    <div className="analytics-chart-body">
+                        <LabeledPieChart segments={deliveryPieSegments} size={220} />
+                        <ul className="donut-legend delivery-legend">
+                            {deliveryLegend.map((item) => (
+                                <li key={item.label}>
+                                    <span
+                                        className="donut-legend-dot"
+                                        style={{ background: primaGold(item.opacity) }}
+                                    />
+                                    {item.label}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -75,37 +108,44 @@ function AnalyticsPage() {
                             <div key={month} className="bar-group">
                                 <div className="bar-pair">
                                     <div
-                                        className="bar bar-dark"
-                                        style={{ height: `${(kigaliBars[i] / 80) * 100}%` }}
+                                        className="bar"
+                                        style={{
+                                            height: `${(kigaliBars[i] / 80) * 100}%`,
+                                            background: CHART_GOLD.full,
+                                        }}
                                     />
                                     <div
-                                        className="bar bar-light"
-                                        style={{ height: `${(otherBars[i] / 80) * 100}%` }}
+                                        className="bar"
+                                        style={{
+                                            height: `${(otherBars[i] / 80) * 100}%`,
+                                            background: CHART_GOLD.half,
+                                        }}
                                     />
                                 </div>
                                 <span className="bar-label">{month}</span>
                             </div>
                         ))}
                     </div>
-                    <div className="bar-chart-y-labels">
-                        <span>80$</span>
-                        <span>40$</span>
-                        <span>20$</span>
-                        <span>0</span>
-                    </div>
                 </div>
 
                 <div className="dashboard-card gauge-card">
                     <h3 className="dashboard-card-title">Customer care</h3>
                     <div className="gauge-wrap">
-                        <div className="gauge-arc" />
+                        <div
+                            className="gauge-arc"
+                            style={{
+                                borderTopColor: CHART_GOLD.full,
+                                borderRightColor: CHART_GOLD.half,
+                                borderLeftColor: CHART_GOLD.faint,
+                            }}
+                        />
                         <div className="gauge-value">90%</div>
                         <div className="gauge-sub">Good Reviews</div>
                     </div>
                     <div className="gauge-legend">
-                        <span><i className="gauge-dot high" /> High</span>
-                        <span><i className="gauge-dot medium" /> Medium</span>
-                        <span><i className="gauge-dot low" /> Low</span>
+                        <span><i className="gauge-dot" style={{ background: CHART_GOLD.full }} /> High</span>
+                        <span><i className="gauge-dot" style={{ background: CHART_GOLD.half }} /> Medium</span>
+                        <span><i className="gauge-dot" style={{ background: CHART_GOLD.faint }} /> Low</span>
                     </div>
                 </div>
             </div>

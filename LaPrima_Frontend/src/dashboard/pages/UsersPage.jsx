@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
+import DashboardModal from '../components/DashboardModal';
+import AddUserForm from '../components/AddUserForm';
 
-const users = [
+const INITIAL_USERS = [
     { id: 1, name: 'Sofia Mendez', email: 'sofia@lumiere.coffee', role: 'Owner', status: 'active', joined: 'Jan 12, 2026' },
     { id: 2, name: 'James Mwangi', email: 'james@lumiere.coffee', role: 'Barista', status: 'active', joined: 'Feb 3, 2026' },
     { id: 3, name: 'Sarah Kimani', email: 'sarah@lumiere.coffee', role: 'Manager', status: 'active', joined: 'Feb 18, 2026' },
@@ -11,7 +13,9 @@ const users = [
 ];
 
 function UsersPage() {
+    const [users, setUsers] = useState(INITIAL_USERS);
     const [search, setSearch] = useState('');
+    const [showAddModal, setShowAddModal] = useState(false);
 
     const filtered = users.filter(
         (u) =>
@@ -19,6 +23,22 @@ function UsersPage() {
             u.email.toLowerCase().includes(search.toLowerCase()) ||
             u.role.toLowerCase().includes(search.toLowerCase())
     );
+
+    const handleAddUser = (data) => {
+        const joined = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        setUsers((prev) => [
+            ...prev,
+            {
+                id: prev.length + 1,
+                name: data.name,
+                email: data.email,
+                role: data.role,
+                status: data.status,
+                joined,
+            },
+        ]);
+        setShowAddModal(false);
+    };
 
     return (
         <>
@@ -31,7 +51,9 @@ function UsersPage() {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
-                    <button className="users-add-btn">+ Add User</button>
+                    <button type="button" className="users-add-btn" onClick={() => setShowAddModal(true)}>
+                        + Add User
+                    </button>
                 </div>
 
                 <table className="users-table">
@@ -68,6 +90,13 @@ function UsersPage() {
                     </tbody>
                 </table>
             </div>
+
+            <DashboardModal open={showAddModal} onClose={() => setShowAddModal(false)} title="Add User">
+                <AddUserForm
+                    onSubmit={handleAddUser}
+                    onCancel={() => setShowAddModal(false)}
+                />
+            </DashboardModal>
         </>
     );
 }
