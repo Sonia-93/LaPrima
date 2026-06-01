@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/static/css/main.54e558d9.css",
+    "main.js": "/static/js/main.9a3269de.js",
+    "static/media/frame2.svg": "/static/media/frame2.609b7dea4612a66662e9b0e82eb603ac.svg",
+    "static/media/landing2.jpeg": "/static/media/landing2.3f8bf430388349ab3fac.jpeg",
+    "static/media/login_image.jpeg": "/static/media/login_image.271d7ee24b65eb2716c9.jpeg",
+    "static/media/landing3.jpeg": "/static/media/landing3.a179a308e0434c3be672.jpeg",
+    "static/media/signup_image.jpeg": "/static/media/signup_image.6322d3eb23f1491dd725.jpeg",
+    "static/media/landing1.jpeg": "/static/media/landing1.85d1fc9dd99241d35e65.jpeg",
+    "static/media/logo.svg": "/static/media/logo.0be66187ab5eb79c18ddf633426d256b.svg",
+    "static/media/mail.svg": "/static/media/mail.bde66da890708f9c6e94ee2e91e89bbb.svg",
+    "static/media/handshake.svg": "/static/media/handshake.6b3a3fd4564f5f2fd436494634a995f0.svg",
+    "index.html": "/index.html",
+    "static/media/lucide_layout-dashboard.svg": "/static/media/lucide_layout-dashboard.d2f9e489fa3eb18896fffe5746a0541d.svg",
+    "static/media/heroicons-outline_location-marker.svg": "/static/media/heroicons-outline_location-marker.974e043e4994d2bb35a960d91351a07c.svg",
+    "static/media/location.svg": "/static/media/location.974e043e4994d2bb35a960d91351a07c.svg",
+    "static/media/building.svg": "/static/media/building.70243d269b593808baaee3ff75237e97.svg",
+    "static/media/rocket.svg": "/static/media/rocket.c073c0eb83818fe9ba3d27153ef4b9e8.svg",
+    "static/media/calling.svg": "/static/media/calling.4be2106e3a17a08f809eb09661d47b7d.svg",
+    "static/media/register.svg": "/static/media/register.e84ce60bf890964bc2d8c5113395a472.svg",
+    "static/media/sonia.svg": "/static/media/sonia.28d3b360aad7caf8c7ead367fee93b2b.svg",
+    "static/media/heroicons-outline_search.svg": "/static/media/heroicons-outline_search.f78c1f0e0ba72071b5bbd11b3e94009e.svg",
+    "static/media/heroicons-outline_device-phone-mobile.svg": "/static/media/heroicons-outline_device-phone-mobile.f950440f9fe2103ff6847490fd2d0710.svg",
+    "static/media/menu.svg": "/static/media/menu.efea8feb1c1a5272c69a20dee4a15e2f.svg",
+    "static/media/👩.svg": "/static/media/👩.5025c3ea30a45412638956db8693aa81.svg",
+    "main.54e558d9.css.map": "/static/css/main.54e558d9.css.map",
+    "main.9a3269de.js.map": "/static/js/main.9a3269de.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.54e558d9.css",
+    "static/js/main.9a3269de.js"
+  ]
+}
