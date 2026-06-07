@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FiTrash2, FiEdit2 } from 'react-icons/fi';
 import DashboardModal from '../components/DashboardModal';
 import AddMenuItemForm from '../components/AddMenuItemForm';
-import axiosInstance from '../api/axios';
+import axiosInstance from '../../api/axios';
 
 const categories = [
     { id: 'all', label: 'All' },
