@@ -566,8 +566,8 @@
 
 .analytics-charts-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px; /* Greatly compressed gap */
+    grid-template-columns: 1fr;
+    gap: 8px;
     margin-bottom: 20px;
 }
 
@@ -593,7 +593,7 @@
 }
 
 .analytics-donut-card {
-    max-width: 480px;
+    width: 100%;
 }
 
 .donut-chart-wrap {

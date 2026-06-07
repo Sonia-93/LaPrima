@@ -23,11 +23,7 @@ function AnalyticsPage() {
         { label: 'Chinese', pct: 0, opacity: 0.1 },
     ]);
 
-    const [deliveryPieSegments, setDeliveryPieSegments] = useState([
-        { pct: 0, opacity: 1, label: '0%' },
-        { pct: 0, opacity: 0.5, label: '0%' },
-        { pct: 0, opacity: 0.2, label: '0%' },
-    ]);
+
 
     useEffect(() => {
         const fetchAnalytics = async () => {
@@ -61,14 +57,18 @@ function AnalyticsPage() {
 
                 orders.forEach(o => {
                     const itemName = (o.item || '').toLowerCase().trim();
-                    let cat = itemCategoryMap[itemName] || 'Hot drinks'; // default fallback
-                    if (catCounts[cat] !== undefined) {
-                        catCounts[cat]++;
-                        totalCategorized++;
-                    }
+                    let rawCat = itemCategoryMap[itemName] || 'Hot drinks';
+                    let lowerCat = rawCat.toLowerCase();
+                    
+                    if (lowerCat.includes('cold')) catCounts['Cold drinks']++;
+                    else if (lowerCat.includes('fast')) catCounts['Fast food']++;
+                    else if (lowerCat.includes('chinese')) catCounts['Chinese']++;
+                    else catCounts['Hot drinks']++;
+                    
+                    totalCategorized++;
                 });
 
-                if (totalCategorized === 0) totalCategorized = 1; // Prevent div by zero
+                if (totalCategorized === 0) totalCategorized = 1;
 
                 setWeekDonutSegments([
                     { label: 'Hot Drinks', pct: Math.round((catCounts['Hot drinks']/totalCategorized)*100), opacity: 1 },
@@ -77,26 +77,7 @@ function AnalyticsPage() {
                     { label: 'Chinese', pct: Math.round((catCounts['Chinese']/totalCategorized)*100), opacity: 0.1 },
                 ]);
 
-                // Delivery Performance (Simulate based on status relative to "Now")
-                // Assuming status 'Ready' is On Time, 'Preparing' is Delayed, 'Now' varies.
-                // Given we don't have complex actual historical completion arrays, we derive it from the dataset snapshot.
-                let onTime = 0; let delayed = 0; let missed = 0;
-                orders.forEach(o => {
-                    if (o.status === 'Ready') onTime++;
-                    else if (o.status === 'Preparing') delayed++;
-                    else missed++; // simplified logic for demo
-                });
-                const totalDelivery = orders.length || 1;
-                const pOnTime = Math.round((onTime / totalDelivery) * 100);
-                const pDelayed = Math.round((delayed / totalDelivery) * 100);
-                const pMissed = (100 - pOnTime - pDelayed) > 0 ? (100 - pOnTime - pDelayed) : 0; 
-                
-                // For visual impact, if dataset is tiny, we might just artificially boost it to show real chart spread
-                setDeliveryPieSegments([
-                    { pct: pOnTime || 60, opacity: 1, label: `${pOnTime || 60}%` },
-                    { pct: pDelayed || 30, opacity: 0.5, label: `${pDelayed || 30}%` },
-                    { pct: pMissed || 10, opacity: 0.2, label: `${pMissed || 10}%` },
-                ]);
+
 
             } catch (err) {
                 console.error("Error fetching analytics data", err);
@@ -109,12 +90,6 @@ function AnalyticsPage() {
     }, []);
 
     const weekDonutGradient = buildConicGradient(weekDonutSegments);
-
-    const deliveryLegend = [
-        { label: 'On Time', opacity: 1 },
-        { label: 'Delayed', opacity: 0.5 },
-        { label: 'Missed', opacity: 0.2 },
-    ];
 
     if (loading) {
         return <div style={{ padding: '40px', color: '#666' }}>Loading Analytics...</div>;
@@ -154,27 +129,6 @@ function AnalyticsPage() {
                                         style={{ background: primaGold(seg.opacity) }}
                                     />
                                     {seg.label} ({seg.pct}%)
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="dashboard-card analytics-pie-card">
-                    <div className="chart-card-header">
-                        <h3 className="dashboard-card-title">Delivery Performance</h3>
-                        <button type="button" className="chart-filter-btn">Annual</button>
-                    </div>
-                    <div className="analytics-chart-body">
-                        <LabeledPieChart segments={deliveryPieSegments} size={220} />
-                        <ul className="donut-legend delivery-legend">
-                            {deliveryLegend.map((item) => (
-                                <li key={item.label}>
-                                    <span
-                                        className="donut-legend-dot"
-                                        style={{ background: primaGold(item.opacity) }}
-                                    />
-                                    {item.label}
                                 </li>
                             ))}
                         </ul>
