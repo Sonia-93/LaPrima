@@ -32,16 +32,16 @@ function SettingsPage() {
             try {
                 const res = await axiosInstance.get('/auth/profile');
                 const data = res.data;
-                // Since this uses the auth routes, axiosInstance must use /api/auth or we add it directly
-                // Note: axiosInstance uses baseURL '/api'. Auth routes are under '/api/auth'
+                // Fall back to splitting `name` if firstName/lastName were never set
+                const nameParts = (data.name || '').trim().split(' ');
                 setFormData({
-                    firstName: data.firstName || '',
-                    lastName: data.lastName || '',
+                    firstName: data.firstName || nameParts[0] || '',
+                    lastName: data.lastName || nameParts.slice(1).join(' ') || '',
                     email: data.email || '',
                     password: ''
                 });
                 if (data.notifications) {
-                    setToggles({ ...toggles, ...data.notifications });
+                    setToggles(prev => ({ ...prev, ...data.notifications }));
                 }
             } catch (err) {
                 console.error("Failed to load profile", err);

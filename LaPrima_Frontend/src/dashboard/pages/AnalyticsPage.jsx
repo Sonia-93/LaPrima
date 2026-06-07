@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HiOutlineShoppingBag, HiOutlineShoppingCart, HiOutlineOfficeBuilding } from 'react-icons/hi';
 import { buildConicGradient, CHART_GOLD, primaGold } from '../chartColors';
-import LabeledPieChart from '../components/LabeledPieChart';
 import axiosInstance from '../../api/axios';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'];

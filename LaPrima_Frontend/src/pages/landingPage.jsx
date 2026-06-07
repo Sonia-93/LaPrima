@@ -1,6 +1,5 @@
 import './landingPage.css'
 import logo from "../logo.svg"
-import frameImg2 from "../frame2.svg"
 import building from "../building.svg"
 import coffee from "../sonia.svg"
 import handshake from "../handshake.svg"
@@ -11,10 +10,8 @@ import dashboardIcon from "../lucide_layout-dashboard.svg";
 import callingIcon from "../calling.svg";
 import locationIconAsset from "../location.svg";
 import mobileIcon from "../heroicons-outline_device-phone-mobile.svg";
-import locationIcon from "../heroicons-outline_location-marker.svg";
 import searchIcon from "../heroicons-outline_search.svg";
 import mailIcon from "../mail.svg";
-import mail from "../mail.svg";
 import landing1 from '../landing1.jpeg';
 import landing2 from '../landing2.jpeg';
 import landing3 from '../landing3.jpeg';

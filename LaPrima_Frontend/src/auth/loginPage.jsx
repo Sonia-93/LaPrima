@@ -17,7 +17,6 @@ function LoginPage() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -79,16 +78,7 @@ function LoginPage() {
                             </div>
                         </div>
 
-                        {/* Note: Kept to exactly match the provided design screenshot which shows confirm password on login */}
-                        <div className="auth-form-group">
-                            <label className="auth-label">confirm password</label>
-                            <div className="password-input-wrapper">
-                                <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" className="auth-input" placeholder="confirm password" />
-                                <span className="password-toggle-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                                    {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
-                                </span>
-                            </div>
-                        </div>
+                        {/* confirm password removed — not needed on login */}
 
                         <div className="auth-checkbox-group">
                             <input type="checkbox" className="auth-checkbox" id="keep-signed" />
