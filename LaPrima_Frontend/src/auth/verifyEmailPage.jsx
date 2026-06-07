@@ -10,18 +10,18 @@ function VerifyEmailPage() {
     const location = useLocation();
     const { login } = useAuth();
     
-    // Auto-focus logic for OTP squares
+    
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
     const [code, setCode] = useState(['', '', '', '', '', '']);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // Retrieve the email passed from SignUpPage, fallback if not available
+    
     const email = location.state?.email || "your-email@example.com";
 
     const handleInputChange = (e, index) => {
         const val = e.target.value;
-        if (!/^[0-9]*$/.test(val)) return; // Ensure numerical input
+        if (!/^[0-9]*$/.test(val)) return; 
         
         const newCode = [...code];
         newCode[index] = val;
