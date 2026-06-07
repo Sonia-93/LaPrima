@@ -289,7 +289,16 @@
     outline: none;
     color: #333;
 }
+.auth-input[type="password"] {
+    font-family: caption, "Inter", sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
 .auth-input::placeholder {
+    font-size: 14px;
+    letter-spacing: normal;
     color: #b3b3b3;
 }
 
