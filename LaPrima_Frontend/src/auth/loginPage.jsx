@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AuthLayout.css';
 import AuthCarousel from './AuthCarousel';
+import axiosInstance from '../api/axios';
+import { useAuth } from '../context/AuthContext';
 
 function LoginPage() {
     const navigate = useNavigate();
+    const { login } = useAuth();
+    
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+
+        try {
+            const response = await axiosInstance.post('/auth/login', {
+                email: formData.email,
+                password: formData.password
+            });
+            
+            if (response.data.token) {
+                login(response.data.user, response.data.token);
+                navigate('/dashboard');
+            }
+        } catch (err) {
+            setError(err.response?.data?.message || "Invalid credentials or server error.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="auth-container">
@@ -21,22 +57,24 @@ function LoginPage() {
                     <h1 className="auth-title">Welcome back</h1>
                     <p className="auth-subtitle">Sign in to your La Prima account to continue.</p>
 
-                    <form className="auth-form" onSubmit={(e) => { e.preventDefault(); navigate('/'); }}>
+                    {error && <div className="auth-error" style={{ color: 'red', marginBottom: '16px' }}>{error}</div>}
+
+                    <form className="auth-form" onSubmit={handleSubmit}>
                         
                         <div className="auth-form-group">
                             <label className="auth-label">Email address</label>
-                            <input type="email" className="auth-input" placeholder="you@yourshop.com" required />
+                            <input type="email" name="email" value={formData.email} onChange={handleChange} className="auth-input" placeholder="you@yourshop.com" required />
                         </div>
 
                         <div className="auth-form-group">
                             <label className="auth-label">Password</label>
-                            <input type="password" className="auth-input" placeholder="create strong password" required />
+                            <input type="password" name="password" value={formData.password} onChange={handleChange} className="auth-input" placeholder="enter password" required />
                         </div>
 
                         {/* Note: Kept to exactly match the provided design screenshot which shows confirm password on login */}
                         <div className="auth-form-group">
                             <label className="auth-label">confirm password</label>
-                            <input type="password" className="auth-input" placeholder="confirm password" />
+                            <input type="password" name="confirmPassword" className="auth-input" placeholder="confirm password" />
                         </div>
 
                         <div className="auth-checkbox-group">
@@ -46,7 +84,9 @@ function LoginPage() {
                             </label>
                         </div>
 
-                        <button type="submit" className="auth-submit-btn">Sign In</button>
+                        <button type="submit" className="auth-submit-btn" disabled={loading}>
+                            {loading ? 'Signing in...' : 'Sign In'}
+                        </button>
                     </form>
 
                     <div className="auth-divider">or Continue with</div>

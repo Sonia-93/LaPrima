@@ -1,10 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AuthLayout.css';
 import AuthCarousel from './AuthCarousel';
+import axiosInstance from '../api/axios';
 
 function SignUpPage() {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+
+        if (formData.password !== formData.confirmPassword) {
+            return setError("Passwords do not match");
+        }
+
+        setLoading(true);
+        try {
+            const response = await axiosInstance.post('/auth/signup', {
+                name: `${formData.firstName} ${formData.lastName}`.trim(),
+                email: formData.email,
+                password: formData.password
+            });
+            
+            // Expected response: { success: true, email: ... }
+            if (response.data.success) {
+                // Assuming `/verify` might need to know the email to show instructions
+                // But for now, we just redirect there
+                navigate('/verify', { state: { email: formData.email } });
+            }
+        } catch (err) {
+            setError(err.response?.data?.message || "Something went wrong during signup.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="auth-container">
@@ -21,31 +64,33 @@ function SignUpPage() {
                     <h1 className="auth-title">Join la Prima</h1>
                     <p className="auth-subtitle">Choose your account type — it's completely free.</p>
 
-                    <form className="auth-form" onSubmit={(e) => { e.preventDefault(); navigate('/verify'); }}>
+                    {error && <div className="auth-error" style={{ color: 'red', marginBottom: '16px' }}>{error}</div>}
+
+                    <form className="auth-form" onSubmit={handleSubmit}>
                         <div className="auth-form-row">
                             <div className="auth-form-group">
                                 <label className="auth-label">First name</label>
-                                <input type="text" className="auth-input" placeholder="Sofia" required />
+                                <input type="text" name="firstName" className="auth-input" placeholder="Sofia" value={formData.firstName} onChange={handleChange} required />
                             </div>
                             <div className="auth-form-group">
                                 <label className="auth-label">Last name</label>
-                                <input type="text" className="auth-input" placeholder="Mendez" required />
+                                <input type="text" name="lastName" className="auth-input" placeholder="Mendez" value={formData.lastName} onChange={handleChange} required />
                             </div>
                         </div>
 
                         <div className="auth-form-group">
                             <label className="auth-label">Email address</label>
-                            <input type="email" className="auth-input" placeholder="you@yourshop.com" required />
+                            <input type="email" name="email" className="auth-input" placeholder="you@yourshop.com" value={formData.email} onChange={handleChange} required />
                         </div>
 
                         <div className="auth-form-group">
                             <label className="auth-label">Password</label>
-                            <input type="password" className="auth-input" placeholder="create strong password" required />
+                            <input type="password" name="password" className="auth-input" placeholder="create strong password" value={formData.password} onChange={handleChange} required />
                         </div>
 
                         <div className="auth-form-group">
                             <label className="auth-label">confirm password</label>
-                            <input type="password" className="auth-input" placeholder="confirm password" required />
+                            <input type="password" name="confirmPassword" className="auth-input" placeholder="confirm password" value={formData.confirmPassword} onChange={handleChange} required />
                         </div>
 
                         <div className="auth-checkbox-group">
@@ -55,7 +100,9 @@ function SignUpPage() {
                             </label>
                         </div>
 
-                        <button type="submit" className="auth-submit-btn">Create My Account</button>
+                        <button type="submit" className="auth-submit-btn" disabled={loading}>
+                            {loading ? 'Creating...' : 'Create My Account'}
+                        </button>
                     </form>
 
                     <div className="auth-divider">or Sign up with</div>

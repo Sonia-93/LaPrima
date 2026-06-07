@@ -12,26 +12,34 @@ import SettingsPage from './dashboard/pages/SettingsPage';
 import UsersPage from './dashboard/pages/UsersPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/verify" element={<VerifyEmailPage />} />
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<DashboardHome />} />
-            <Route path="orders" element={<OrdersPage />} />
-            <Route path="menu" element={<MenuPage />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="users" element={<UsersPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/verify" element={<VerifyEmailPage />} />
+            
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route index element={<DashboardHome />} />
+                <Route path="orders" element={<OrdersPage />} />
+                <Route path="menu" element={<MenuPage />} />
+                <Route path="analytics" element={<AnalyticsPage />} />
+                <Route path="users" element={<UsersPage />} />
+                <Route path="settings" element={<SettingsPage />} />
+              </Route>
+            </Route>
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
