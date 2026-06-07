@@ -1,29 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiTrash2, FiEdit2 } from 'react-icons/fi';
 import DashboardModal from '../components/DashboardModal';
 import AddMenuItemForm from '../components/AddMenuItemForm';
+import axiosInstance from '../api/axios';
 
 const categories = [
-    { id: 'all', label: 'All(6)' },
+    { id: 'all', label: 'All' },
     { id: 'hot', label: 'Hot Drinks' },
     { id: 'cold', label: 'Cold Drinks' },
     { id: 'fast', label: 'Fast Food' },
     { id: 'chinese', label: 'chinese' },
 ];
 
-const INITIAL_ITEMS = [
-    { name: 'Expresso', category: 'Hot Drinks', orders: 134, price: '$3.50', status: 'active' },
-    { name: 'Milk shake', category: 'Cold Drinks', orders: 98, price: '$4.50', status: 'active' },
-    { name: 'Chicken Burger', category: 'Fast Food', orders: 71, price: '$5.50', status: 'active' },
-    { name: 'Cappucino', category: 'Hot Drinks', orders: 56, price: '$3.00', status: 'active' },
-    { name: 'Cocktail', category: 'Cold Drinks', orders: 42, price: '$6.00', status: 'active' },
-    { name: 'Fried Rice', category: 'chinese', orders: 28, price: '$7.50', status: 'soldout' },
-];
+// Helper to strictly map UI categories to backend strictly cased Enums
+const mapCategoryToBackend = (uiCat) => {
+    const mapping = {
+        'Hot Drinks': 'Hot drinks',
+        'Cold Drinks': 'Cold drinks',
+        'Fast Food': 'Fast food',
+        'chinese': 'Chinese'
+    };
+    return mapping[uiCat] || 'Hot drinks';
+};
+
+const mapCategoryToFrontend = (backendCat) => {
+    const mapping = {
+        'Hot drinks': 'Hot Drinks',
+        'Cold drinks': 'Cold Drinks',
+        'Fast food': 'Fast Food',
+        'Chinese': 'chinese'
+    };
+    return mapping[backendCat] || backendCat;
+};
 
 function MenuPage() {
-    const [menuItems, setMenuItems] = useState(INITIAL_ITEMS);
+    const [menuItems, setMenuItems] = useState([]);
     const [activeCat, setActiveCat] = useState('all');
     const [showAddModal, setShowAddModal] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    const fetchMenu = async () => {
+        try {
+            const response = await axiosInstance.get('/menu');
+            // the backend returns array of items. Let's adapt their fields to our frontend standard
+            const adapted = response.data.map(item => ({
+                _id: item._id,
+                name: item.name,
+                category: mapCategoryToFrontend(item.category),
+                orders: item.orderNumber || 0,
+                price: `$${Number(item.money).toFixed(2)}`,
+                status: item.status === 'Sold Out' ? 'soldout' : 'active'
+            }));
+            setMenuItems(adapted);
+        } catch (error) {
+            console.error("Error fetching menu items:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchMenu();
+    }, []);
 
     const filtered = menuItems.filter((item) => {
         if (activeCat === 'all') return true;
@@ -34,13 +72,42 @@ function MenuPage() {
         return true;
     });
 
-    const handleAddItem = (data) => {
-        setMenuItems((prev) => [...prev, data]);
-        setShowAddModal(false);
+    const handleAddItem = async (data) => {
+        try {
+            const backendPayload = {
+                name: data.name,
+                category: mapCategoryToBackend(data.category),
+                money: Number(data.price.replace(/[^0-9.-]+/g, "")),
+                orderNumber: data.orders || 0,
+                status: data.status === 'soldout' ? 'Sold Out' : 'Active',
+                timeOrdered: new Date().toISOString()
+            };
+            const response = await axiosInstance.post('/menu', backendPayload);
+            
+            // Successfully added to DB, now adapt and push to our local list
+            const newItem = response.data;
+            setMenuItems((prev) => [...prev, {
+                _id: newItem._id,
+                name: newItem.name,
+                category: mapCategoryToFrontend(newItem.category),
+                orders: newItem.orderNumber,
+                price: `$${Number(newItem.money).toFixed(2)}`,
+                status: newItem.status === 'Sold Out' ? 'soldout' : 'active'
+            }]);
+            setShowAddModal(false);
+        } catch (error) {
+            console.error("Error adding menu item:", error);
+            alert("Failed to add menu item. Check the console for more details.");
+        }
     };
 
-    const removeItem = (name) => {
-        setMenuItems((prev) => prev.filter((item) => item.name !== name));
+    const removeItem = async (id) => {
+        try {
+            await axiosInstance.delete(`/menu/${id}`);
+            setMenuItems((prev) => prev.filter((item) => item._id !== id));
+        } catch (error) {
+            console.error("Error removing menu item:", error);
+        }
     };
 
     return (
@@ -54,7 +121,7 @@ function MenuPage() {
                             className={`menu-cat-btn${activeCat === cat.id ? ' active' : ''}`}
                             onClick={() => setActiveCat(cat.id)}
                         >
-                            {cat.id === 'all' ? `All(${menuItems.length})` : cat.label}
+                            {cat.id === 'all' ? `All (${menuItems.length})` : cat.label}
                         </button>
                     ))}
                 </div>
@@ -63,32 +130,36 @@ function MenuPage() {
                 </button>
             </div>
 
-            <div className="menu-grid">
-                {filtered.map((item) => (
-                    <div key={item.name} className="menu-item-card">
-                        <div className="menu-item-card-top">
-                            <span className="menu-item-card-name">{item.name}</span>
-                            <span className={`menu-item-badge ${item.status}`}>
-                                {item.status === 'soldout' ? 'Sold out' : 'Active'}
-                            </span>
-                        </div>
-                        <p className="menu-item-card-meta">
-                            {item.category}-{item.orders} orders this week
-                        </p>
-                        <div className="menu-item-card-footer">
-                            <span className="menu-item-card-price">{item.price}</span>
-                            <div className="menu-item-card-actions">
-                                <button type="button" className="icon-btn" aria-label="Delete" onClick={() => removeItem(item.name)}>
-                                    <FiTrash2 />
-                                </button>
-                                <button type="button" className="icon-btn" aria-label="Edit">
-                                    <FiEdit2 />
-                                </button>
+            {loading ? (
+                <p>Loading menu...</p>
+            ) : (
+                <div className="menu-grid">
+                    {filtered.map((item) => (
+                        <div key={item._id || item.name} className="menu-item-card">
+                            <div className="menu-item-card-top">
+                                <span className="menu-item-card-name">{item.name}</span>
+                                <span className={`menu-item-badge ${item.status}`}>
+                                    {item.status === 'soldout' ? 'Sold out' : 'Active'}
+                                </span>
+                            </div>
+                            <p className="menu-item-card-meta">
+                                {item.category} • {item.orders} orders this week
+                            </p>
+                            <div className="menu-item-card-footer">
+                                <span className="menu-item-card-price">{item.price}</span>
+                                <div className="menu-item-card-actions">
+                                    <button type="button" className="icon-btn" aria-label="Delete" onClick={() => removeItem(item._id)}>
+                                        <FiTrash2 />
+                                    </button>
+                                    <button type="button" className="icon-btn" aria-label="Edit">
+                                        <FiEdit2 />
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
 
             <DashboardModal open={showAddModal} onClose={() => setShowAddModal(false)} title="Add Menu Item">
                 <AddMenuItemForm
