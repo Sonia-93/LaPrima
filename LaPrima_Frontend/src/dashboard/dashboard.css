@@ -6,7 +6,6 @@
     color: #2B211C;
 }
 
-/* ── Sidebar ── */
 .dashboard-sidebar {
     width: 220px;
     min-height: 100vh;
@@ -88,7 +87,7 @@
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* ── Main area ── */
+
 .dashboard-main {
     flex: 1;
     margin-left: 220px;
@@ -568,7 +567,7 @@
 .analytics-charts-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 8px; /* Greatly compressed gap */
     margin-bottom: 20px;
 }
 
@@ -758,9 +757,17 @@
     margin-right: 4px;
 }
 
-.gauge-dot.high { background: #DDA15E; }
-.gauge-dot.medium { background: rgba(221, 161, 94, 0.5); }
-.gauge-dot.low { background: rgba(221, 161, 94, 0.2); }
+.gauge-dot.high {
+    background: #DDA15E;
+}
+
+.gauge-dot.medium {
+    background: rgba(221, 161, 94, 0.5);
+}
+
+.gauge-dot.low {
+    background: rgba(221, 161, 94, 0.2);
+}
 
 .settings-grid {
     display: grid;
@@ -1306,17 +1313,21 @@
     .stats-row {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .dashboard-middle-row,
     .dashboard-bottom-row {
         grid-template-columns: 1fr;
     }
+
     .menu-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .orders-summary-row,
     .analytics-top-stats {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .settings-grid,
     .analytics-bottom-row,
     .analytics-charts-row {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../logo.svg';
-import userAvatar from '../👩.svg';
+import userAvatar from '../girl.jpeg';
 import './dashboard.css';
 
 const navItems = [

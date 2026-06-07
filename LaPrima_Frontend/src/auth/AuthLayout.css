@@ -301,11 +301,11 @@
 }
 
 .auth-input[type="password"] {
-    font-family: sans-serif;
-    font-size: 18px;
-    letter-spacing: 4px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    font-family: inherit;
+    font-size: 30px;
+    letter-spacing: 1px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .auth-input::placeholder {
