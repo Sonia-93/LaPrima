@@ -13,7 +13,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    display: none; /* hidden on small screens */
+    display: none;
+    /* hidden on small screens */
 }
 
 @media (min-width: 900px) {
@@ -36,7 +37,10 @@
 ══════════════════════════════ */
 .carousel-background {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -48,13 +52,19 @@
 .carousel-background::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.4);
 }
 
 .carousel-overlay {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 5;
     display: flex;
     flex-direction: column;
@@ -289,13 +299,15 @@
     outline: none;
     color: #333;
 }
+
 .auth-input[type="password"] {
-    font-family: caption, "Inter", sans-serif;
-    font-size: 22px;
-    letter-spacing: 2px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    font-family: sans-serif;
+    font-size: 18px;
+    letter-spacing: 4px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
+
 .auth-input::placeholder {
     font-size: 14px;
     letter-spacing: normal;
@@ -365,14 +377,18 @@
     font-family: "Inria Sans", sans-serif;
     font-size: 14px;
 }
-.auth-divider::before, .auth-divider::after {
+
+.auth-divider::before,
+.auth-divider::after {
     content: '';
     flex: 1;
     border-bottom: 1px solid #E8D5BC;
 }
+
 .auth-divider:not(:empty)::before {
     margin-right: .5em;
 }
+
 .auth-divider:not(:empty)::after {
     margin-left: .5em;
 }
@@ -404,9 +420,7 @@
     background-color: #FDF9F3;
 }
 
-/* ══════════════════════════════
-   PASSWORD TOGGLE
-══════════════════════════════ */
+
 .password-input-wrapper {
     position: relative;
     display: flex;
@@ -415,7 +429,7 @@
 
 .password-input-wrapper .auth-input {
     width: 100%;
-    padding-right: 40px; /* Make room for the eye icon */
+    padding-right: 40px;
 }
 
 .password-toggle-icon {
@@ -432,9 +446,7 @@
     color: #DDA15E;
 }
 
-/* ══════════════════════════════
-   VERIFY EMAIL SPECIFIC
-══════════════════════════════ */
+
 .verify-icon-container {
     margin-bottom: 20px;
 }
@@ -484,6 +496,7 @@
     color: #1C1208;
     outline: none;
 }
+
 .otp-input:focus {
     border-color: #DDA15E;
 }
@@ -494,6 +507,7 @@
     color: #666;
     margin-bottom: 30px;
 }
+
 .expires-text span {
     color: #DDA15E;
 }
@@ -505,6 +519,7 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
 .resend-text span {
     color: #DDA15E;
     cursor: pointer;
@@ -521,6 +536,7 @@
     text-decoration: none;
     cursor: pointer;
 }
+
 .back-to-signup:hover {
     color: #DDA15E;
 }

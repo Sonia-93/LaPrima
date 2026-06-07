@@ -42,7 +42,7 @@ function SettingsPage() {
                                 id="password" 
                                 type={showPassword ? "text" : "password"} 
                                 placeholder="leave blank to keep current" 
-                                style={{ width: '100%', paddingRight: '40px', fontFamily: !showPassword ? 'caption, "Inter", sans-serif' : 'inherit', fontSize: !showPassword ? '18px' : 'inherit', letterSpacing: !showPassword ? '2px' : 'normal' }}
+                                style={{ width: '100%', paddingRight: '40px', fontFamily: !showPassword ? 'sans-serif' : 'inherit', fontSize: !showPassword ? '18px' : 'inherit', letterSpacing: !showPassword ? '4px' : 'normal' }}
                             />
                             <span 
                                 onClick={() => setShowPassword(!showPassword)}
