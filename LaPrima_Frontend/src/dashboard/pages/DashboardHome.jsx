@@ -1,27 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaStar, FaUserCircle } from 'react-icons/fa';
 import WeeklyRevenueChart from '../components/WeeklyRevenueChart';
-
-const stats = [
-    { label: 'REVENUE TODAY', value: '$123,000', icon: 'wallet' },
-    { label: 'ORDERS TODAY', value: '142', icon: 'cart' },
-    { label: 'AVG RATINGS', value: '4.9', icon: 'star' },
-    { label: 'CUSTOMERS', value: '890', icon: 'users' },
-];
-
-const liveOrders = [
-    { name: 'Double Espresso', customer: 'James M.', time: '2 min ago', price: '$4.50', status: 'new' },
-    { name: 'Iced Latte x 2', customer: 'Sarah K.', time: '5 min ago', price: '$9.00', status: 'preparing' },
-    { name: 'Matcha Latte', customer: 'Tom R.', time: '8 min ago', price: '$5.50', status: 'ready' },
-    { name: 'Cappuccino', customer: 'Lisa P.', time: '12 min ago', price: '$4.50', status: 'ready' },
-];
-
-const topMenuItems = [
-    { name: 'Espresso', category: 'Hot Drinks', orders: 142, price: '$3.50', pct: 100 },
-    { name: 'Flat White', category: 'Hot Drinks', orders: 98, price: '$4.50', pct: 69 },
-    { name: 'Iced Caramel Latte', category: 'Cold Drinks', orders: 71, price: '$5.50', pct: 50 },
-    { name: 'Croissant', category: 'Pastries', orders: 56, price: '$3.00', pct: 39 },
-];
+import axiosInstance from '../../api/axios';
 
 const recentReviews = [
     { name: 'Aisha K.', time: '2 hours ago', text: 'Best espresso in the city. The atmosphere is perfect for working.' },
@@ -58,6 +38,70 @@ function StatIcon({ type }) {
 }
 
 function DashboardHome() {
+    const [liveOrders, setLiveOrders] = useState([]);
+    const [topMenuItems, setTopMenuItems] = useState([]);
+    const [stats, setStats] = useState([
+        { label: 'REVENUE TODAY', value: '$0', icon: 'wallet' },
+        { label: 'ORDERS TODAY', value: '0', icon: 'cart' },
+        { label: 'AVG RATINGS', value: '4.9', icon: 'star' },
+        { label: 'CUSTOMERS', value: '0', icon: 'users' },
+    ]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            setLoading(true);
+            try {
+                const [ordersRes, menuRes] = await Promise.all([
+                    axiosInstance.get('/orders'),
+                    axiosInstance.get('/menu')
+                ]);
+                
+                const orders = ordersRes.data || [];
+                const menuItems = menuRes.data || [];
+
+                const recentOrders = orders.slice(0, 4).map(o => ({
+                    id: o._id,
+                    name: o.item || 'Unknown Item',
+                    customer: o.customer,
+                    time: o.timeOrdered || 'Just now',
+                    price: `$${Number(o.money || 0).toFixed(2)}`,
+                    status: (o.status === 'Now' ? 'new' : (o.status === 'Preparing' ? 'preparing' : 'ready'))
+                }));
+                setLiveOrders(recentOrders);
+
+                const sortedMenu = [...menuItems].sort((a,b) => (b.orderNumber || 0) - (a.orderNumber || 0)).slice(0, 4);
+                const maxOrders = sortedMenu[0]?.orderNumber || 1;
+                const topItems = sortedMenu.map(m => ({
+                    name: m.name,
+                    category: m.category,
+                    orders: m.orderNumber || 0,
+                    price: `$${Number(m.money || 0).toFixed(2)}`,
+                    pct: Math.round(((m.orderNumber || 0) / maxOrders) * 100)
+                }));
+                setTopMenuItems(topItems);
+
+                const todayOrders = orders.length; 
+                const revenueToday = orders.reduce((sum, o) => sum + Number(o.money || 0), 0);
+                const uniqueCustomers = new Set(orders.map(o => o.customer)).size;
+
+                setStats([
+                    { label: 'REVENUE TODAY', value: `$${revenueToday.toLocaleString('en-US', {minimumFractionDigits: 0})}`, icon: 'wallet' },
+                    { label: 'ORDERS TODAY', value: String(todayOrders), icon: 'cart' },
+                    { label: 'AVG RATINGS', value: '4.9', icon: 'star' },
+                    { label: 'CUSTOMERS', value: String(uniqueCustomers), icon: 'users' },
+                ]);
+
+            } catch (error) {
+                console.error("Failed to load dashboard data", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDashboardData();
+    }, []);
+
     return (
         <>
             <div className="stats-row">
@@ -81,8 +125,8 @@ function DashboardHome() {
 
                 <div className="dashboard-card">
                     <h3 className="dashboard-card-title">Live Orders</h3>
-                    {liveOrders.map((order) => (
-                        <div key={order.name + order.customer} className="live-order-item">
+                    {loading ? <p style={{color: '#666', fontSize: '14px', marginTop: '10px'}}>Loading orders...</p> : liveOrders.length === 0 ? <p style={{color: '#666', fontSize: '14px', marginTop: '10px'}}>No live orders found.</p> : liveOrders.map((order) => (
+                        <div key={order.id + order.customer} className="live-order-item">
                             <div>
                                 <div className="live-order-name">{order.name}</div>
                                 <div className="live-order-customer">{order.customer} · {order.time}</div>
@@ -101,7 +145,7 @@ function DashboardHome() {
             <div className="dashboard-bottom-row">
                 <div className="dashboard-card">
                     <h3 className="dashboard-card-title">Top Menu Items</h3>
-                    {topMenuItems.map((item) => (
+                    {loading ? <p style={{color: '#666', fontSize: '14px', marginTop: '10px'}}>Loading menu...</p> : topMenuItems.length === 0 ? <p style={{color: '#666', fontSize: '14px', marginTop: '10px'}}>No top items found.</p> : topMenuItems.map((item) => (
                         <div key={item.name} className="menu-item-row">
                             <div className="menu-item-info">
                                 <div className="menu-item-name">{item.name}</div>
