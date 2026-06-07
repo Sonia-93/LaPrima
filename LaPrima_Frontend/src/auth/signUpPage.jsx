@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './AuthLayout.css';
 import AuthCarousel from './AuthCarousel';
 import axiosInstance from '../api/axios';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 function SignUpPage() {
     const navigate = useNavigate();
@@ -15,6 +16,8 @@ function SignUpPage() {
     });
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -85,12 +88,22 @@ function SignUpPage() {
 
                         <div className="auth-form-group">
                             <label className="auth-label">Password</label>
-                            <input type="password" name="password" className="auth-input" placeholder="create strong password" value={formData.password} onChange={handleChange} required />
+                            <div className="password-input-wrapper">
+                                <input type={showPassword ? "text" : "password"} name="password" className="auth-input" placeholder="create strong password" value={formData.password} onChange={handleChange} required />
+                                <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                                </span>
+                            </div>
                         </div>
 
                         <div className="auth-form-group">
                             <label className="auth-label">confirm password</label>
-                            <input type="password" name="confirmPassword" className="auth-input" placeholder="confirm password" value={formData.confirmPassword} onChange={handleChange} required />
+                            <div className="password-input-wrapper">
+                                <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" className="auth-input" placeholder="confirm password" value={formData.confirmPassword} onChange={handleChange} required />
+                                <span className="password-toggle-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                    {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                                </span>
+                            </div>
                         </div>
 
                         <div className="auth-checkbox-group">

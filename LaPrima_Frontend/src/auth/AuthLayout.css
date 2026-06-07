@@ -166,10 +166,10 @@
 }
 
 .carousel-dot {
-    width: 30px;
-    height: 6px;
+    width: 45px;
+    height: 8px;
     background-color: rgba(255, 255, 255, 0.4);
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -185,7 +185,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 60px 40px;
+    padding: 30px 40px;
     position: relative;
     overflow-y: auto;
 }
@@ -208,7 +208,7 @@
     border: 1px solid #E8D5BC;
     border-radius: 30px;
     overflow: hidden;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .auth-tab {
@@ -256,7 +256,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 14px;
 }
 
 .auth-form-row {
@@ -283,7 +283,7 @@
     background-color: #F8F8F8;
     border: none;
     border-radius: 8px;
-    padding: 14px 16px;
+    padding: 12px 14px;
     font-family: "Inria Sans", sans-serif;
     font-size: 14px;
     outline: none;
@@ -297,8 +297,8 @@
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .auth-checkbox {
@@ -393,6 +393,34 @@
 
 .social-btn:hover {
     background-color: #FDF9F3;
+}
+
+/* ══════════════════════════════
+   PASSWORD TOGGLE
+══════════════════════════════ */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-wrapper .auth-input {
+    width: 100%;
+    padding-right: 40px; /* Make room for the eye icon */
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle-icon:hover {
+    color: #DDA15E;
 }
 
 /* ══════════════════════════════

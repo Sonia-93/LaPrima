@@ -3,7 +3,7 @@ import { HiOutlineShoppingCart, HiOutlineFire, HiOutlineCheckCircle, HiOutlineCu
 import { FiTrash2, FiEdit2 } from 'react-icons/fi';
 import DashboardModal from '../components/DashboardModal';
 import AddOrderForm from '../components/AddOrderForm';
-import axiosInstance from '../api/axios';
+import axiosInstance from '../../api/axios';
 
 const mapStatusToBackend = (status) => {
     if (status === 'new') return 'Now';
