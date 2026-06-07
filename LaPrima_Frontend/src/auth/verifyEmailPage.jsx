@@ -1,18 +1,68 @@
-import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './AuthLayout.css';
 import AuthCarousel from './AuthCarousel';
+import axiosInstance from '../api/axios';
+import { useAuth } from '../context/AuthContext';
 
 function VerifyEmailPage() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { login } = useAuth();
     
     // Auto-focus logic for OTP squares
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
+    const [code, setCode] = useState(['', '', '', '', '', '']);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    // Retrieve the email passed from SignUpPage, fallback if not available
+    const email = location.state?.email || "your-email@example.com";
 
     const handleInputChange = (e, index) => {
         const val = e.target.value;
+        if (!/^[0-9]*$/.test(val)) return; // Ensure numerical input
+        
+        const newCode = [...code];
+        newCode[index] = val;
+        setCode(newCode);
+
+        // move to next input automatically
         if (val.length === 1 && index < 5) {
             inputRefs[index + 1].current.focus();
+        }
+    };
+
+    const handleKeyDown = (e, index) => {
+        if (e.key === 'Backspace' && code[index] === '' && index > 0) {
+            inputRefs[index - 1].current.focus();
+        }
+    };
+
+    const handleVerify = async () => {
+        const fullCode = code.join('');
+        if (fullCode.length < 6) {
+            setError("Please enter the complete 6-digit code.");
+            return;
+        }
+
+        setError('');
+        setLoading(true);
+
+        try {
+            const response = await axiosInstance.post('/auth/verify-email', {
+                email,
+                code: fullCode
+            });
+            // According to backend, it returns { success, token, user }
+            if (response.data.success) {
+                login(response.data.user, response.data.token);
+                navigate('/dashboard');
+            }
+        } catch (err) {
+            setError(err.response?.data?.message || "Invalid verification code.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -34,8 +84,10 @@ function VerifyEmailPage() {
                     <p className="auth-subtitle">We've sent a 6-digit verification code to</p>
 
                     <div className="verify-email-display">
-                        sofia@lumuniere.com
+                        {email}
                     </div>
+
+                    {error && <div className="auth-error" style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
 
                     <div className="verify-subtitle">ENTER VERIFICATION CODE</div>
 
@@ -47,7 +99,9 @@ function VerifyEmailPage() {
                                 maxLength="1" 
                                 className="otp-input"
                                 ref={inputRefs[index]}
+                                value={code[index]}
                                 onChange={(e) => handleInputChange(e, index)}
+                                onKeyDown={(e) => handleKeyDown(e, index)}
                             />
                         ))}
                     </div>
@@ -58,13 +112,14 @@ function VerifyEmailPage() {
 
                     <button 
                         className="auth-submit-btn" 
-                        onClick={() => navigate('/')} 
+                        onClick={handleVerify} 
+                        disabled={loading}
                         style={{ marginTop: '0', marginBottom: '20px' }}>
-                        Verify Email
+                        {loading ? 'Verifying...' : 'Verify Email'}
                     </button>
 
                     <div className="resend-text">
-                        Didn't receive it ? <span>Resend Code</span>
+                        Didn't receive it ? <span style={{ cursor: 'pointer' }}>Resend Code</span>
                     </div>
 
                     <button 
