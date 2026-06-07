@@ -70,36 +70,17 @@ function UsersPage() {
 
     return (
         <>
-            <div className="menu-toolbar" style={{ marginBottom: '16px' }}>
-                <div className="menu-categories">
-                    <button 
-                        type="button" 
-                        className={`menu-cat-btn ${activeTab === 'team' ? 'active' : ''}`}
-                        onClick={() => { setActiveTab('team'); setSearch(''); }}
-                    >
-                        Team Members
-                    </button>
-                    <button 
-                        type="button" 
-                        className={`menu-cat-btn ${activeTab === 'customers' ? 'active' : ''}`}
-                        onClick={() => { setActiveTab('customers'); setSearch(''); }}
-                    >
-                        Customers
-                    </button>
-                </div>
-            </div>
-
             <div className="dashboard-card">
                 <div className="users-toolbar">
                     <input
                         type="text"
                         className="users-search"
-                        placeholder={`Search ${activeTab === 'team' ? 'team members' : 'customers'}...`}
+                        placeholder="Search customers..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <button type="button" className="users-add-btn" onClick={() => setShowAddModal(true)}>
-                        + Add {activeTab === 'team' ? 'User' : 'Customer'}
+                        + Add Customer
                     </button>
                 </div>
 
@@ -109,7 +90,7 @@ function UsersPage() {
                     <table className="users-table">
                         <thead>
                             <tr>
-                                <th>{activeTab === 'team' ? 'USER' : 'CUSTOMER'}</th>
+                                <th>CUSTOMER</th>
                                 <th>EMAIL</th>
                                 <th>ROLE</th>
                                 <th>STATUS</th>
@@ -120,7 +101,7 @@ function UsersPage() {
                             {filtered.length === 0 ? (
                                 <tr>
                                     <td colSpan="5" style={{ textAlign: 'center', padding: '20px', color: '#888' }}>
-                                        No {activeTab} found.
+                                        No customers found.
                                     </td>
                                 </tr>
                             ) : filtered.map((user) => (
@@ -148,7 +129,7 @@ function UsersPage() {
                 )}
             </div>
 
-            <DashboardModal open={showAddModal} onClose={() => setShowAddModal(false)} title={`Add ${activeTab === 'team' ? 'User' : 'Customer'}`}>
+            <DashboardModal open={showAddModal} onClose={() => setShowAddModal(false)} title="Add Customer">
                 <AddUserForm
                     onSubmit={handleAddUser}
                     onCancel={() => setShowAddModal(false)}
