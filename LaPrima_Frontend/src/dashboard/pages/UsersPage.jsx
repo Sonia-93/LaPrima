@@ -5,42 +5,14 @@ import AddUserForm from '../components/AddUserForm';
 import axiosInstance from '../../api/axios';
 
 function UsersPage() {
-    const [users, setUsers] = useState([]);
     const [customers, setCustomers] = useState([]);
-    
-    // activeTab can be 'team' or 'customers'
-    const [activeTab, setActiveTab] = useState('team');
-
     const [search, setSearch] = useState('');
     const [showAddModal, setShowAddModal] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (activeTab === 'team') {
-            fetchTeam();
-        } else if (activeTab === 'customers') {
-            fetchCustomers();
-        }
-    }, [activeTab]);
-
-    const fetchTeam = async () => {
-        setLoading(true);
-        try {
-            const res = await axiosInstance.get('/auth/users');
-            setUsers(res.data.map((u, i) => ({
-                id: u._id,
-                name: u.name,
-                email: u.email,
-                role: u.role || 'Staff',
-                status: u.isVerified ? 'active' : 'inactive',
-                joined: new Date(u.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-            })));
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
+        fetchCustomers();
+    }, []);
 
 
 
@@ -63,9 +35,7 @@ function UsersPage() {
         }
     }
 
-    const currentList = activeTab === 'team' ? users : customers;
-
-    const filtered = currentList.filter(
+    const filtered = customers.filter(
         (u) =>
             u.name.toLowerCase().includes(search.toLowerCase()) ||
             u.email.toLowerCase().includes(search.toLowerCase()) ||
@@ -74,37 +44,27 @@ function UsersPage() {
 
     const handleAddUser = async (data) => {
         const joined = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        
-        if (activeTab === 'team') {
-            setUsers((prev) => [
-                ...prev,
-                { id: prev.length + 1, name: data.name, email: data.email, role: data.role, status: data.status, joined },
-            ]);
+        try {
+            const payload = {
+                name: data.name,
+                email: data.email,
+                role: 'Customer',
+                status: data.status.charAt(0).toUpperCase() + data.status.slice(1),
+                joined
+            };
+            const res = await axiosInstance.post('/customers', payload);
+            setCustomers((prev) => [...prev, {
+                id: res.data._id,
+                name: res.data.name,
+                email: res.data.email,
+                role: res.data.role,
+                status: res.data.status ? res.data.status.toLowerCase() : 'active',
+                joined: res.data.joined
+            }]);
             setShowAddModal(false);
-        } else {
-            try {
-                const payload = {
-                    name: data.name, 
-                    email: data.email, 
-                    role: data.role && data.role.toLowerCase() !== 'customer' ? data.role : 'Customer', 
-                    status: data.status.charAt(0).toUpperCase() + data.status.slice(1), 
-                    joined
-                };
-                
-                const res = await axiosInstance.post('/customers', payload);
-                setCustomers((prev) => [...prev, {
-                    id: res.data._id,
-                    name: res.data.name,
-                    email: res.data.email,
-                    role: res.data.role,
-                    status: res.data.status ? res.data.status.toLowerCase() : 'active',
-                    joined: res.data.joined
-                }]);
-                setShowAddModal(false);
-            } catch (err) { 
-                console.error(err); 
-                alert("Could not add customer. Ensure the email is unique.");
-            }
+        } catch (err) {
+            console.error(err);
+            alert("Could not add customer. Ensure the email is unique.");
         }
     };
 

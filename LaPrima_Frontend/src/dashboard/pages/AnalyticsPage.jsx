@@ -57,8 +57,12 @@ function AnalyticsPage() {
 
                 orders.forEach(o => {
                     const itemName = (o.item || '').toLowerCase().trim();
-                    let rawCat = itemCategoryMap[itemName] || 'Hot drinks';
-                    let lowerCat = rawCat.toLowerCase();
+                    const rawCat = itemCategoryMap[itemName];
+
+                    // skip orders where the item doesn't match any menu item
+                    if (!rawCat) return;
+
+                    const lowerCat = rawCat.toLowerCase();
                     
                     if (lowerCat.includes('cold')) catCounts['Cold drinks']++;
                     else if (lowerCat.includes('fast')) catCounts['Fast food']++;
