@@ -4,17 +4,8 @@ import DashboardModal from '../components/DashboardModal';
 import AddUserForm from '../components/AddUserForm';
 import axiosInstance from '../../api/axios';
 
-const INITIAL_USERS = [
-    { id: 1, name: 'Sofia Mendez', email: 'sofia@lumiere.coffee', role: 'Owner', status: 'active', joined: 'Jan 12, 2026' },
-    { id: 2, name: 'James Mwangi', email: 'james@lumiere.coffee', role: 'Barista', status: 'active', joined: 'Feb 3, 2026' },
-    { id: 3, name: 'Sarah Kimani', email: 'sarah@lumiere.coffee', role: 'Manager', status: 'active', joined: 'Feb 18, 2026' },
-    { id: 4, name: 'Tom Richards', email: 'tom@lumiere.coffee', role: 'Barista', status: 'inactive', joined: 'Mar 1, 2026' },
-    { id: 5, name: 'Lisa Park', email: 'lisa@lumiere.coffee', role: 'Cashier', status: 'active', joined: 'Mar 15, 2026' },
-    { id: 6, name: 'David Osei', email: 'david@lumiere.coffee', role: 'Barista', status: 'active', joined: 'Apr 2, 2026' },
-];
-
 function UsersPage() {
-    const [users, setUsers] = useState(INITIAL_USERS);
+    const [users, setUsers] = useState([]);
     const [customers, setCustomers] = useState([]);
     
     // activeTab can be 'team' or 'customers'
@@ -25,10 +16,33 @@ function UsersPage() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (activeTab === 'customers') {
+        if (activeTab === 'team') {
+            fetchTeam();
+        } else if (activeTab === 'customers') {
             fetchCustomers();
         }
     }, [activeTab]);
+
+    const fetchTeam = async () => {
+        setLoading(true);
+        try {
+            const res = await axiosInstance.get('/auth/users');
+            setUsers(res.data.map((u, i) => ({
+                id: u._id,
+                name: u.name,
+                email: u.email,
+                role: u.role || 'Staff',
+                status: u.isVerified ? 'active' : 'inactive',
+                joined: new Date(u.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            })));
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
     const fetchCustomers = async () => {
         setLoading(true);

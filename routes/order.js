@@ -10,9 +10,9 @@ const {
 } = require("../controllers/order");
 
 const router = express.Router();
-router.get("/orders/status/:status", authenticate, getOrderByStatus);
-router.get("/orders/:id", authenticate, getOrderById);
-router.get("/orders", authenticate, getAllOrders);
+router.get("/orders/status/:status", getOrderByStatus);
+router.get("/orders/:id", getOrderById);
+router.get("/orders", getAllOrders);
 router.post("/orders", authenticate, addOrder);
 router.patch("/orders/:id", authenticate, updateOrder);
 router.delete("/orders/:id", authenticate, deleteOrder);

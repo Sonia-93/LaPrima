@@ -444,6 +444,53 @@ const testEmail = async (req, res) => {
   }
 };
 
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password -verificationCode -resetPasswordCode");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+const updateProfile = async (req, res) => {
+  try {
+    const { firstName, lastName, email, notifications, newPassword } = req.body;
+    const user = await User.findById(req.user.id);
+    
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (firstName !== undefined) user.firstName = firstName;
+    if (lastName !== undefined) user.lastName = lastName;
+    // Provide a generic fallback for 'name' assuming original code heavily relies on it
+    if (firstName || lastName) user.name = `${firstName || user.firstName || ''} ${lastName || user.lastName || ''}`.trim();
+    if (email) user.email = email;
+    if (notifications) user.notifications = notifications;
+
+    if (newPassword && newPassword.trim().length > 0) {
+      user.password = await bcrypt.hash(newPassword, 12);
+    }
+
+    await user.save();
+    
+    // Return updated sans passwords
+    user.password = undefined;
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password -verificationCode -resetPasswordCode");
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   signup,
   login,
@@ -452,4 +499,7 @@ module.exports = {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  getProfile,
+  updateProfile,
+  getUsers,
 };

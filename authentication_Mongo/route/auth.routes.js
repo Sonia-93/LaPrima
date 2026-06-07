@@ -9,9 +9,12 @@ const {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  getProfile,
+  updateProfile,
+  getUsers,
 } = require("../controller/auth.controller");
 
-const { signupValidation, loginValidation } = require("../middleware/auth.middleware");
+const { signupValidation, loginValidation, authenticate } = require("../middleware/auth.middleware");
 
 router.post("/test-email", testEmail);
 router.post("/signup", signupValidation, signup);
@@ -20,4 +23,9 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 router.post("/login", loginValidation, login);
 router.post("/logout", logout);
+
+router.get("/profile", authenticate, getProfile);
+router.put("/profile", authenticate, updateProfile);
+
+router.get("/users", getUsers);
 module.exports = router;
