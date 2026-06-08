@@ -6,6 +6,7 @@ const authRoutes = require("./authentication_Mongo/route/auth.routes");
 const menuRoutes = require("./routes/menu");
 const orderRoutes = require("./routes/order");
 const customerRoutes = require("./routes/customer");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,6 +18,12 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  cors({
+    origin: "https://la-prima.vercel.app",
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.json({
