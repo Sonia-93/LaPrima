@@ -22,7 +22,7 @@ const signup = async (req, res) => {
     } catch (emailError) {
       console.error("Email send error:", emailError?.message);
 
-      // In dev, always print the code to console so you can still verify
+      // In dev, print the code to console
       if (process.env.NODE_ENV !== "production") {
         console.log("\n" + "=".repeat(60));
         console.log("EMAIL NOT CONFIGURED: Verification code (use this to verify):");
@@ -30,11 +30,9 @@ const signup = async (req, res) => {
         console.log(`  Code:  ${verificationCode}`);
         console.log("=".repeat(60) + "\n");
       } else {
-        // In production, roll back the user and return a clear error
-        await User.findByIdAndDelete(user._id);
-        return res.status(500).json({
-          message: "We couldn't send the verification email. Please check your email address and try again.",
-        });
+        // In production log the real error but don't delete the user
+        // The code is saved in DB — they can use /resend-code or contact support
+        console.error("PRODUCTION EMAIL FAILURE:", emailError?.message);
       }
     }
 
@@ -205,33 +203,21 @@ const logout = async (req, res) => {
   }
 };
 const testEmail = async (req, res) => {
-  if (process.env.NODE_ENV === "production") {
-    return res.status(404).json({ message: "Not found" });
-  }
   const toEmail = req.body?.email || process.env.EMAIL_USER;
   if (!toEmail) {
-    return res
-      .status(400)
-      .json({
-        message:
-          'Add email in body: { "email": "your@email.com" } or set EMAIL_USER in .env',
-      });
+    return res.status(400).json({
+      message: 'Add email in body: { "email": "your@email.com" } or set EMAIL_USER in .env',
+    });
   }
   const testCode = "123456";
   try {
     await sendVerificationEmailUtil(toEmail, testCode);
     res.json({
       success: true,
-      message:
-        "Test email sent! Check your inbox (and spam). Code in email: " +
-        testCode,
+      message: "Test email sent! Check your inbox (and spam). Code in email: " + testCode,
     });
   } catch (err) {
-    res.status(500).json({
-      message: err.message?.includes("535")
-        ? "Gmail rejected credentials. Use App Password in .env (see .env.example)"
-        : err.message,
-    });
+    res.status(500).json({ message: err.message });
   }
 };
 
